@@ -114,6 +114,8 @@ final class AppSettings {
     /// prompt that blocks the run.
     @ObservationIgnored private let apiKeyAccount: String
 
+    @ObservationIgnored private let webhookTokenAccount: String
+
     // MARK: - Apps to Watch
 
     var watchTeams: Bool {
@@ -463,6 +465,27 @@ final class AppSettings {
         }
     }
 
+    // MARK: - Transcript Delivery
+
+    var transcriptWebhookEnabled: Bool {
+        didSet { defaults.set(transcriptWebhookEnabled, forKey: "transcriptWebhookEnabled") }
+    }
+
+    var transcriptWebhookURL: String {
+        didSet { defaults.set(transcriptWebhookURL, forKey: "transcriptWebhookURL") }
+    }
+
+    var transcriptWebhookToken: String {
+        get { KeychainHelper.read(key: webhookTokenAccount) ?? "" }
+        set {
+            if newValue.isEmpty {
+                KeychainHelper.delete(key: webhookTokenAccount)
+            } else {
+                KeychainHelper.save(key: webhookTokenAccount, value: newValue)
+            }
+        }
+    }
+
     // MARK: - Output Directory
 
     /// Security-scoped output-dir bookmark. Stored so `@Observable` can track it.
@@ -504,9 +527,14 @@ final class AppSettings {
     // MARK: - Init
 
     // swiftlint:disable:next function_body_length
-    init(defaults: UserDefaults = .standard, apiKeyAccount: String = "openAIAPIKey") {
+    init(
+        defaults: UserDefaults = .standard,
+        apiKeyAccount: String = "openAIAPIKey",
+        webhookTokenAccount: String = "transcriptWebhookToken",
+    ) {
         self.defaults = defaults
         self.apiKeyAccount = apiKeyAccount
+        self.webhookTokenAccount = webhookTokenAccount
 
         watchTeams = defaults.object(forKey: "watchTeams") as? Bool ?? true
         watchZoom = defaults.object(forKey: "watchZoom") as? Bool ?? true
@@ -571,6 +599,9 @@ final class AppSettings {
             ?? Self.defaultOpenAIEndpoint
         openAIModel = defaults.object(forKey: "openAIModel") as? String ?? "llama3.1"
         customOutputDirBookmark = defaults.data(forKey: "customOutputDirBookmark")
+
+        transcriptWebhookEnabled = defaults.object(forKey: "transcriptWebhookEnabled") as? Bool ?? false
+        transcriptWebhookURL = defaults.string(forKey: "transcriptWebhookURL") ?? ""
 
         // Migrate legacy "audioDebugLogging" key (renamed to "verboseDiagnostics" 2026-05-04).
         // New key wins if both are set; legacy value seeds the new key on first launch.

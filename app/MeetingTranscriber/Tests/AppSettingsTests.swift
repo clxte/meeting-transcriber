@@ -12,6 +12,8 @@ final class AppSettingsTests: XCTestCase {
     private var testSuiteName: String!
     // swiftlint:disable:next implicitly_unwrapped_optional
     private var apiKeyAccount: String!
+    // swiftlint:disable:next implicitly_unwrapped_optional
+    private var webhookTokenAccount: String!
 
     /// Each test gets its own volatile `UserDefaults(suiteName:)` so
     /// `swift test --parallel` doesn't race on the shared on-disk plist.
@@ -29,12 +31,17 @@ final class AppSettingsTests: XCTestCase {
         super.setUp()
         testSuiteName = "AppSettingsTests-\(getpid())-\(UUID().uuidString)"
         apiKeyAccount = "AppSettingsTests-openAIAPIKey-\(getpid())-\(UUID().uuidString)"
+        webhookTokenAccount = "AppSettingsTests-webhookToken-\(getpid())-\(UUID().uuidString)"
         guard let suite = UserDefaults(suiteName: testSuiteName) else {
             XCTFail("Could not create test UserDefaults suite")
             return
         }
         defaults = suite
-        settings = AppSettings(defaults: defaults, apiKeyAccount: apiKeyAccount)
+        settings = AppSettings(
+            defaults: defaults,
+            apiKeyAccount: apiKeyAccount,
+            webhookTokenAccount: webhookTokenAccount,
+        )
     }
 
     override func tearDown() {
@@ -44,6 +51,8 @@ final class AppSettingsTests: XCTestCase {
         testSuiteName = nil
         KeychainHelper.delete(key: apiKeyAccount)
         apiKeyAccount = nil
+        KeychainHelper.delete(key: webhookTokenAccount)
+        webhookTokenAccount = nil
         super.tearDown()
     }
 
@@ -371,6 +380,23 @@ final class AppSettingsTests: XCTestCase {
 
     func testOpenAIModelDefault() {
         XCTAssertEqual(settings.openAIModel, "llama3.1")
+    }
+
+    func testTranscriptWebhookTokenViaKeychainHelper() {
+        XCTAssertEqual(settings.transcriptWebhookToken, "")
+
+        settings.transcriptWebhookToken = "hook-token"
+        XCTAssertEqual(KeychainHelper.read(key: webhookTokenAccount), "hook-token")
+        XCTAssertEqual(settings.transcriptWebhookToken, "hook-token")
+
+        settings.transcriptWebhookToken = ""
+        XCTAssertNil(KeychainHelper.read(key: webhookTokenAccount))
+        XCTAssertEqual(settings.transcriptWebhookToken, "")
+    }
+
+    func testTranscriptDeliveryDefaultsToOff() {
+        XCTAssertFalse(settings.transcriptWebhookEnabled)
+        XCTAssertEqual(settings.transcriptWebhookURL, "")
     }
 
     func testOpenAIAPIKeyViaKeychainHelper() {

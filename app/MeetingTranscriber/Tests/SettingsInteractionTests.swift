@@ -98,6 +98,34 @@ final class SettingsInteractionTests: XCTestCase {
         XCTAssertFalse(settings.saveRawTranscriptSeparately)
     }
 
+    // MARK: - Transcript delivery write-back
+
+    func testTranscriptDeliveryToggleWritesBackToSettings() throws {
+        let settings = makeSettings()
+        settings.transcriptWebhookEnabled = false
+        let view = OutputSettingsView(settings: settings)
+
+        let toggle = try view.inspect()
+            .find(viewWithAccessibilityIdentifier: A11yID.transcriptWebhookToggle)
+            .find(ViewType.Toggle.self)
+        try toggle.tap()
+
+        XCTAssertTrue(settings.transcriptWebhookEnabled)
+    }
+
+    func testTranscriptDeliveryEndpointFieldWritesBackToSettings() throws {
+        let settings = makeSettings()
+        settings.transcriptWebhookURL = ""
+        let view = OutputSettingsView(settings: settings)
+
+        let field = try view.inspect()
+            .find(viewWithAccessibilityIdentifier: A11yID.transcriptWebhookURLField)
+            .find(ViewType.TextField.self)
+        try field.setInput("https://example.com/hooks/transcript")
+
+        XCTAssertEqual(settings.transcriptWebhookURL, "https://example.com/hooks/transcript")
+    }
+
     // MARK: - Stepper write-back
 
     func testPollIntervalStepperIncrementsSetting() throws {

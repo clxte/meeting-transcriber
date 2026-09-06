@@ -101,6 +101,33 @@ struct OutputSettingsView: View {
             }
             .accessibilityIdentifier(A11yID.protocolSection)
             .recordOnlyDisabled(settings.recordOnly)
+
+            Section("Transcript Delivery") {
+                Toggle("Send transcript to a server", isOn: $settings.transcriptWebhookEnabled)
+                    .accessibilityIdentifier(A11yID.transcriptWebhookToggle)
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Delivery Endpoint")
+                    TextField("https://example.com/hooks/transcript", text: $settings.transcriptWebhookURL)
+                        .textFieldStyle(.roundedBorder)
+                        .accessibilityIdentifier(A11yID.transcriptWebhookURLField)
+                    Text("POST as JSON once a meeting finishes processing. Must be https, unless it is localhost.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+
+                HStack {
+                    Text("Bearer Token")
+                    Spacer()
+                    SecureField("", text: $settings.transcriptWebhookToken)
+                        .frame(width: 200)
+                }
+                Text("Sent as an Authorization header. Leave empty for a local endpoint that needs no auth.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .accessibilityIdentifier(A11yID.transcriptWebhookSection)
+            .recordOnlyDisabled(settings.recordOnly)
         }
         .formStyle(.grouped)
         .onAppear {
