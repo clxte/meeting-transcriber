@@ -225,6 +225,7 @@
 "%llds" = "%lld s";
 "Updates" = "Mises à jour";
 "Check for Updates" = "Rechercher les mises à jour";
+"Check for Updates..." = "Rechercher les mises à jour…";
 "Check Now" = "Vérifier maintenant";
 "Include Pre-Releases" = "Inclure les préversions";
 "Up to date" = "À jour";

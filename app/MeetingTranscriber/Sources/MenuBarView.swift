@@ -22,6 +22,10 @@ struct MenuBarView: View {
     let onOpenProtocol: (URL) -> Void
     let onOpenProtocolsFolder: () -> Void
     let onOpenSettings: () -> Void
+    /// Sparkle's user-initiated check. nil in the App Store variant (the store
+    /// updates apps itself), which also hides the menu item. Defaulted so the
+    /// many test constructions don't have to name it.
+    var onCheckForUpdates: (() -> Void)?
     let onNameSpeakers: (() -> Void)?
     let onProcessFiles: () -> Void
     let onDismissJob: (UUID) -> Void
@@ -71,6 +75,7 @@ struct MenuBarView: View {
         Divider()
 
         settingsButton
+        checkForUpdatesButton
 
         Divider()
 
@@ -226,6 +231,16 @@ struct MenuBarView: View {
             Label("Settings...", systemImage: "gear")
         }
         .keyboardShortcut(",")
+    }
+
+    @ViewBuilder private var checkForUpdatesButton: some View {
+        if let onCheckForUpdates {
+            Button {
+                onCheckForUpdates()
+            } label: {
+                Label("Check for Updates...", systemImage: "arrow.triangle.2.circlepath")
+            }
+        }
     }
 
     private var quitButton: some View {

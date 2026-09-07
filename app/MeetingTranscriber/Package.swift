@@ -15,6 +15,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.19.1"),
         .package(url: "https://github.com/argmaxinc/WhisperKit.git", from: "1.0.0"),
         .package(url: "https://github.com/FluidInference/FluidAudio.git", from: "0.13.4"),
+        .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.9.6"),
         .package(path: "../../tools/audiotap"),
     ],
     targets: [
@@ -51,6 +52,7 @@ let package = Package(
                 .product(name: "WhisperKit", package: "WhisperKit"),
                 .product(name: "FluidAudio", package: "FluidAudio"),
                 .product(name: "AudioTapLib", package: "audiotap"),
+                .product(name: "Sparkle", package: "Sparkle"),
                 "CLocalVQE",
             ],
             path: "Sources",
@@ -83,6 +85,12 @@ let package = Package(
                 // in the vendoring link spike).
                 .linkedLibrary("c++"),
                 .linkedFramework("Accelerate"),
+                // Sparkle is a dynamic framework that the bundle-assembly
+                // scripts copy into Contents/Frameworks; the executable needs
+                // that rpath to find it there. The SPM build directory stays
+                // reachable through the default rpaths, so `swift test` and a
+                // bare binary keep working.
+                .unsafeFlags(["-Xlinker", "-rpath", "-Xlinker", "@executable_path/../Frameworks"]),
             ]
         ),
         .testTarget(

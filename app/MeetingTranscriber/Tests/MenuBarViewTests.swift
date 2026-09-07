@@ -34,6 +34,7 @@ final class MenuBarViewTests: XCTestCase {
         isWatching: Bool = false,
         pipelineQueue: PipelineQueue? = nil,
         updateChecker: UpdateChecker? = nil,
+        onCheckForUpdates: (() -> Void)? = nil,
         onNameSpeakers: (() -> Void)? = nil,
         onStopManualRecording: (() -> Void)? = nil,
         onRecordMicrophone: @escaping () -> Void = {},
@@ -55,11 +56,29 @@ final class MenuBarViewTests: XCTestCase {
             onOpenProtocol: { _ in },
             onOpenProtocolsFolder: {},
             onOpenSettings: {},
+            onCheckForUpdates: onCheckForUpdates,
             onNameSpeakers: onNameSpeakers,
             onProcessFiles: {},
             onDismissJob: { _ in },
             onQuit: {},
         )
+    }
+
+    // MARK: - Check for Updates (Sparkle)
+
+    func testCheckForUpdatesButtonFiresCallback() throws {
+        var fired = false
+        let sut = makeView { fired = true }
+        let button = try sut.inspect().find(button: "Check for Updates...")
+        try button.tap()
+        XCTAssertTrue(fired)
+    }
+
+    /// The App Store variant passes nil (the store updates apps itself); the
+    /// menu item must disappear rather than hand back a dead click.
+    func testCheckForUpdatesButtonHiddenWithoutCallback() throws {
+        let sut = makeView()
+        XCTAssertThrowsError(try sut.inspect().find(button: "Check for Updates..."))
     }
 
     // MARK: - Start/Stop button

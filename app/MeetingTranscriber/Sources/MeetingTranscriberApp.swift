@@ -1,4 +1,7 @@
 import Combine
+#if !APPSTORE
+    import Sparkle
+#endif
 import SwiftUI
 
 extension Notification.Name {
@@ -75,6 +78,27 @@ private struct WindowAccessor: NSViewRepresentable {
 struct MeetingTranscriberApp: App {
     @State private var appState = AppState(notifier: NotificationManager.shared)
     @State private var captionsWindow: LiveCaptionsWindowController?
+
+    #if !APPSTORE
+        /// Sparkle auto-updater. `startingUpdater: true` schedules the
+        /// automatic background checks against the feed URL in Info.plist
+        /// (SUFeedURL, signed with the SUPublicEDKey pair). Excluded from the
+        /// App Store variant like the legacy checker's download path: the
+        /// store forbids self-updating apps and performs updates itself.
+        private let sparkleUpdater = SPUStandardUpdaterController(
+            startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil,
+        )
+    #endif
+
+    /// nil in the App Store variant, which hides the menu item.
+    private var checkForUpdatesAction: (() -> Void)? {
+        #if APPSTORE
+            nil
+        #else
+            { [sparkleUpdater] in sparkleUpdater.updater.checkForUpdates() }
+        #endif
+    }
+
     @Environment(\.openWindow)
     private var openWindow
 
@@ -121,6 +145,7 @@ struct MeetingTranscriberApp: App {
                 onOpenSettings: {
                     bringWindowToFront(id: "settings")
                 },
+                onCheckForUpdates: checkForUpdatesAction,
                 onNameSpeakers: appState.hasPendingSpeakerNamingJobs ? {
                     bringWindowToFront(id: "speaker-naming")
                 } : nil,

@@ -93,9 +93,13 @@ cp "$SPM_DIR/.build/release/MeetingTranscriber" "$MACOS_DIR/MeetingTranscriber"
 echo ""
 echo "Step 2: Assembling app bundle..."
 
-# Info.plist with version
+# Info.plist with version. CFBundleVersion gets the same value: Sparkle
+# compares CFBundleVersion (sparkle:version in the appcast), and the static
+# "1" it would otherwise keep can never increase, so no update would ever be
+# offered.
 cp "$SPM_DIR/Sources/Info.plist" "$CONTENTS/Info.plist"
 /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION" "$CONTENTS/Info.plist"
+/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $VERSION" "$CONTENTS/Info.plist"
 
 # App icon
 ICONSET_SRC="$SPM_DIR/Sources/Assets.xcassets/AppIcon.appiconset"
@@ -151,6 +155,14 @@ install_localvqe_resources "$RESOURCES"
 source "$SCRIPT_DIR/lib/localization-resources.sh"
 install_localization_resources "$RESOURCES"
 
+# Sparkle auto-update framework, linked dynamically by the executable and
+# expected at Contents/Frameworks (rpath in Package.swift). Both variants
+# embed it — the App Store build compiles the updater out but keeps the load
+# command; see lib/sparkle-resources.sh.
+# shellcheck source=lib/sparkle-resources.sh
+source "$SCRIPT_DIR/lib/sparkle-resources.sh"
+install_sparkle_framework "$CONTENTS" "$SPM_DIR/.build/release"
+
 # Inject git commit hash
 GIT_HASH=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
 /usr/libexec/PlistBuddy -c "Add :GitCommitHash string $GIT_HASH" "$CONTENTS/Info.plist" 2>/dev/null || \
@@ -189,6 +201,11 @@ if [ "$NOTARIZE" = true ]; then
     # shellcheck source=lib/bundle-ids.sh
     source "$SCRIPT_DIR/lib/bundle-ids.sh"
     prepare_signing "$APP_BUNDLE" "$ENTITLEMENTS" "$RELEASE_BUNDLE_ID" "$DEVELOPER_ID"
+
+    # Hardened-runtime library validation only loads frameworks signed by the
+    # same team, so Sparkle must be re-signed (nested executables first)
+    # before the outer app signature seals the bundle.
+    sign_sparkle_framework "$CONTENTS" "$SIGNING_IDENTITY"
 
     # Sign the main app binary with entitlements. The identity comes from
     # prepare_signing: when a profile is embedded it must be one the profile

@@ -104,6 +104,13 @@ fi
 source "$SCRIPT_DIR/lib/localization-resources.sh"
 install_localization_resources "$APP_BUNDLE/Contents/Resources"
 
+# Sparkle framework: the executable's load command expects it in
+# Contents/Frameworks. The dev build is not hardened, so the framework keeps
+# the Sparkle project's own signature — no re-sign here.
+# shellcheck source=lib/sparkle-resources.sh
+source "$SCRIPT_DIR/lib/sparkle-resources.sh"
+install_sparkle_framework "$APP_BUNDLE/Contents" "$SPM_DIR/.build/release"
+
 # Code-sign so macOS keeps its permission grants across rebuilds.
 # Uses SHA-1 hash to avoid "ambiguous identity" errors with duplicate names.
 #
