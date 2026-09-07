@@ -6,7 +6,7 @@
 
 enum PickerLanguages {
     static let whisperKit: [(code: String, label: String)] = [
-        ("", "Auto-detect"),
+        ("", String(localized: "Auto-detect")),
         ("de", "Deutsch"),
         ("en", "English"),
         ("fr", "Fran\u{00E7}ais"),
@@ -45,7 +45,7 @@ enum PickerLanguages {
     /// engine call site and lets the decoder pick the script freely — which
     /// can drift on multi-script audio. Explicit selection prevents that.
     static let parakeet: [(code: String, label: String)] = [
-        ("", "Auto-detect"),
+        ("", String(localized: "Auto-detect")),
         ("de", "Deutsch"),
         ("en", "English"),
         ("fr", "Fran\u{00E7}ais"),

@@ -214,8 +214,7 @@ struct KnownVoicesView: View {
             }
             .pickerStyle(.menu)
             Text(
-                "Embeddings, centroid, last-used and use count of both speakers will be combined; "
-                    + "\(mergingFrom) is removed.",
+                "Embeddings, centroid, last-used and use count of both speakers will be combined; \(mergingFrom) is removed.",
             )
             .font(.caption)
             .foregroundStyle(.secondary)
@@ -254,10 +253,7 @@ struct KnownVoicesView: View {
             .padding(.horizontal, 6)
             .padding(.vertical, 2)
             .overlay(Capsule().stroke(.secondary.opacity(0.5), lineWidth: 1))
-            .help(
-                "Seeded via debug RPC with a random embedding."
-                    + " Excluded from auto-naming. Delete to remove.",
-            )
+            .help("Seeded via debug RPC with a random embedding. Excluded from auto-naming. Delete to remove.")
     }
 
     // MARK: - Derived
@@ -279,8 +275,8 @@ struct KnownVoicesView: View {
                     .disabled(namingDialogActive)
                     .help(
                         namingDialogActive
-                            ? "Finish the open naming dialog before enrolling new voices."
-                            : "Diarize an existing audio file and seed speaker DB entries.",
+                            ? String(localized: "Finish the open naming dialog before enrolling new voices.")
+                            : String(localized: "Diarize an existing audio file and seed speaker DB entries."),
                     )
             }
             Button("Rename") { startRename() }

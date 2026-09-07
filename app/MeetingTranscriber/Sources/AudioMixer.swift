@@ -471,13 +471,13 @@ enum AudioMixerError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .bufferCreationFailed: "Failed to create audio buffer"
-        case .noFloatData: "Audio buffer has no float data"
-        case .formatCreationFailed: "Failed to create audio format"
-        case .noAudioTrack: "File contains no audio track"
-        case let .audioExtractionFailed(detail): "Audio extraction failed: \(detail)"
-        case .ffmpegNotAvailable: "ffmpeg not found. Install: brew install ffmpeg"
-        case let .ffmpegFailed(detail): "ffmpeg failed: \(detail)"
+        case .bufferCreationFailed: String(localized: "Failed to create audio buffer")
+        case .noFloatData: String(localized: "Audio buffer has no float data")
+        case .formatCreationFailed: String(localized: "Failed to create audio format")
+        case .noAudioTrack: String(localized: "File contains no audio track")
+        case let .audioExtractionFailed(detail): String(localized: "Audio extraction failed: \(detail)")
+        case .ffmpegNotAvailable: String(localized: "ffmpeg not found. Install: brew install ffmpeg")
+        case let .ffmpegFailed(detail): String(localized: "ffmpeg failed: \(detail)")
         }
     }
 }

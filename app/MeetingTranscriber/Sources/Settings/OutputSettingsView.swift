@@ -93,7 +93,8 @@ struct OutputSettingsView: View {
 
                 Picker("Protocol Language", selection: $settings.protocolLanguage) {
                     ForEach(AppSettings.protocolLanguages, id: \.self) { lang in
-                        Text(lang).tag(lang)
+                        // Display name localizes; the persisted value / prompt token stays English.
+                        Text(LocalizedStringKey(lang)).tag(lang)
                     }
                 }
 
@@ -209,7 +210,7 @@ struct OutputSettingsView: View {
                         ProgressView()
                             .controlSize(.small)
                     }
-                    Text(availableModels.isEmpty ? "Fetch Models" : "Refresh Models")
+                    Text(availableModels.isEmpty ? String(localized: "Fetch Models") : String(localized: "Refresh Models"))
                 }
             }
             .disabled(testingConnection)
@@ -302,9 +303,9 @@ struct OutputSettingsView: View {
                     if !models.contains(settings.openAIModel) {
                         settings.openAIModel = models[0]
                     }
-                    connectionTestResult = .success("Connected (\(models.count) models)")
+                    connectionTestResult = .success(String(localized: "Connected (\(models.count) models)"))
                 } else {
-                    connectionTestResult = .success("Connected")
+                    connectionTestResult = .success(String(localized: "Connected"))
                 }
 
             case let .failure(error):
@@ -339,7 +340,7 @@ struct OutputSettingsView: View {
         panel.allowedContentTypes = [.plainText, .init(filenameExtension: "md")].compactMap(\.self)
         panel.allowsMultipleSelection = false
         panel.canChooseDirectories = false
-        panel.message = "Select a prompt file to import"
+        panel.message = String(localized: "Select a prompt file to import")
         guard panel.runModal() == .OK, let source = panel.url else { return }
         ensurePromptDirectory()
         let dest = AppPaths.customPromptFile
@@ -363,7 +364,7 @@ struct OutputSettingsView: View {
         panel.canChooseFiles = false
         panel.canCreateDirectories = true
         panel.allowsMultipleSelection = false
-        panel.message = "Choose a folder for protocol output"
+        panel.message = String(localized: "Choose a folder for protocol output")
         guard panel.runModal() == .OK, let url = panel.url else { return }
         settings.setCustomOutputDir(url)
     }

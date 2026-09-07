@@ -102,7 +102,7 @@ struct VoiceEnrollmentView: View {
             Text("Diarizing \(url.lastPathComponent)…").font(.headline)
             HStack {
                 ProgressView()
-                Text(String(format: "%.0f s elapsed", elapsed))
+                Text(String(format: String(localized: "%.0f s elapsed"), elapsed))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -201,7 +201,7 @@ struct VoiceEnrollmentView: View {
                 guard !Task.isCancelled else { return }
                 stopElapsedTimer()
                 if result.segments.isEmpty {
-                    stage = .error("No speakers detected in this recording.")
+                    stage = .error(String(localized: "No speakers detected in this recording."))
                 } else {
                     stage = .naming(VoiceEnrollmentLogic.buildNamingPayload(
                         url: url, diarization: result, matcher: matcher,
@@ -260,7 +260,7 @@ enum VoiceEnrollmentLogic {
         switch result {
         case let .confirmed(mapping):
             guard let embeddings = payload.diarization.embeddings else {
-                return .stage(.error("Diarization produced no embeddings; cannot enroll."))
+                return .stage(.error(String(localized: "Diarization produced no embeddings; cannot enroll.")))
             }
             matcher.updateDB(
                 mapping: mapping,

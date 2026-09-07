@@ -44,7 +44,7 @@ struct MenuBarView: View {
     /// this file before (see the note on `body`).
     private func meetingLabel(_ meeting: MeetingInfo) -> String {
         guard let pid = meeting.pid else { return meeting.app }
-        return "\(meeting.app) (PID \(pid))"
+        return String(localized: "\(meeting.app) (PID \(pid))")
     }
 
     // The sections below are hoisted out of `body` into separate computed
@@ -147,7 +147,7 @@ struct MenuBarView: View {
             }
             .keyboardShortcut("m")
             .disabled(!microphoneAvailability.allowsStart)
-            .help(microphoneAvailability.disabledReason ?? "Record the system microphone, with no app audio")
+            .help(microphoneAvailability.disabledReason ?? String(localized: "Record the system microphone, with no app audio"))
 
             Button {
                 onRecordApp()
@@ -296,12 +296,12 @@ struct MenuBarView: View {
     /// whether the current run is normal. Purely informational.
     private func stageProgressText(_ job: PipelineJob) -> String {
         let elapsed = pipelineQueue.activeJobElapsed
-        let base = "\(job.state.label) \(formattedElapsed(elapsed))"
+        let base = String(localized: "\(job.state.label) \(formattedElapsed(elapsed))")
         guard let stage = StageKind(jobState: job.state),
               let avg = pipelineQueue.averageSeconds(forJobID: job.id, stage: stage), avg > 0 else { return base }
         let suffix = StageTimingStats.isSlowerThanUsual(elapsed: elapsed, average: avg)
-            ? " · longer than usual (Ø \(formattedElapsed(avg)))"
-            : " · Ø \(formattedElapsed(avg))"
+            ? String(localized: " · longer than usual (Ø \(formattedElapsed(avg)))")
+            : String(localized: " · Ø \(formattedElapsed(avg))")
         return base + suffix
     }
 

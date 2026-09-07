@@ -49,12 +49,12 @@ enum PairedImportSummary {
 
         var parts: [String] = []
         if pairedCount > 0 {
-            parts.append("\(pairedCount) paired recording\(pairedCount == 1 ? "" : "s")")
+            parts.append(String(localized: "\(pairedCount) paired recording\(pairedCount == 1 ? "" : "s")"))
         }
         if singletonCount > 0 {
-            parts.append("\(singletonCount) single file\(singletonCount == 1 ? "" : "s")")
+            parts.append(String(localized: "\(singletonCount) single file\(singletonCount == 1 ? "" : "s")"))
         }
         let lhs = parts.joined(separator: " + ")
-        return "\(lhs) → \(total) transcript\(total == 1 ? "" : "s")"
+        return String(localized: "\(lhs) → \(total) transcript\(total == 1 ? "" : "s")")
     }
 }

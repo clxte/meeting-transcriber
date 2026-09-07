@@ -48,7 +48,7 @@ enum AppPickerStartState: Equatable {
             nil
 
         case .manualRecordingActive:
-            "Another recording is already starting or under way. The menu bar shows it once it is running."
+            String(localized: "Another recording is already starting or under way. The menu bar shows it once it is running.")
         }
     }
 }

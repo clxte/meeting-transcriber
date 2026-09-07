@@ -21,7 +21,7 @@ struct RecognitionStatsView: View {
         }
 
         var label: String {
-            "Last \(rawValue) days"
+            String(localized: "Last \(rawValue) days")
         }
     }
 
@@ -71,7 +71,7 @@ struct RecognitionStatsView: View {
 
     private func statRow(_ action: RecognitionAction, count: Int, total: Int) -> some View {
         let pct = Int((Double(count) / Double(total) * 100).rounded())
-        return LabeledContent(action.rawValue.capitalized) {
+        return LabeledContent(action.displayLabel) {
             HStack(spacing: 8) {
                 Text("\(count)")
                 pctLabel(pct)
@@ -100,5 +100,20 @@ struct RecognitionStatsView: View {
             from: now.addingTimeInterval(-interval),
             to: now,
         )
+    }
+}
+
+/// Display labels for the stat rows. `RecognitionAction.rawValue` is the
+/// `recognition_log.jsonl` wire value and must not change; the label localizes
+/// separately (byte-identical to the former `.capitalized` output in English).
+private extension RecognitionAction {
+    var displayLabel: String {
+        switch self {
+        case .accepted: String(localized: "Accepted")
+        case .corrected: String(localized: "Corrected")
+        case .added: String(localized: "Added")
+        case .skipped: String(localized: "Skipped")
+        case .dismissed: String(localized: "Dismissed")
+        }
     }
 }

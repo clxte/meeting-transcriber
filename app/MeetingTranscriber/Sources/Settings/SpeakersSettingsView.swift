@@ -141,7 +141,7 @@ struct SpeakersSettingsView: View {
         HStack {
             Text("Expected Speakers")
             Spacer()
-            Text(settings.numSpeakers == 0 ? "Auto" : "\(settings.numSpeakers)")
+            Text(settings.numSpeakers == 0 ? String(localized: "Auto") : "\(settings.numSpeakers)")
                 .frame(width: 40)
                 .multilineTextAlignment(.trailing)
             Stepper(
@@ -186,7 +186,7 @@ struct SpeakersSettingsView: View {
             HStack {
                 Toggle("Exclude overlap", isOn: $settings.excludeOverlap)
                 HelpBadge(
-                    text: "When enabled, frames with multiple active speakers are masked out during embedding extraction.",
+                    text: String(localized: "When enabled, frames with multiple active speakers are masked out during embedding extraction."),
                 )
                 Spacer()
             }
@@ -223,39 +223,42 @@ private struct TuningKnob {
     let help: String
 
     static let clusterThreshold = Self(
-        title: "Cluster threshold",
+        title: String(localized: "Cluster threshold"),
         range: 0.0 ... 1.0,
         step: 0.05,
         format: "%.2f",
         suffix: "",
-        help: "Cosine-similarity threshold for merging speaker embeddings. Higher values split speakers more aggressively (more speakers detected).",
+        help: Localized.lookup(
+            "Cosine-similarity threshold for merging speaker embeddings. "
+                + "Higher values split speakers more aggressively (more speakers detected).",
+        ),
     )
 
     static let warmStartFa = Self(
-        title: "Warm-start Fa",
+        title: String(localized: "Warm-start Fa"),
         range: 0.0 ... 1.0,
         step: 0.01,
         format: "%.2f",
         suffix: "",
-        help: "VBx warm-start Fa controls clustering precision. Increasing it tightens speaker boundaries.",
+        help: String(localized: "VBx warm-start Fa controls clustering precision. Increasing it tightens speaker boundaries."),
     )
 
     static let warmStartFb = Self(
-        title: "Warm-start Fb",
+        title: String(localized: "Warm-start Fb"),
         range: 0.0 ... 2.0,
         step: 0.05,
         format: "%.2f",
         suffix: "",
-        help: "VBx warm-start Fb controls clustering recall. Increasing it merges similar speakers more readily.",
+        help: String(localized: "VBx warm-start Fb controls clustering recall. Increasing it merges similar speakers more readily."),
     )
 
     static let minSegmentDuration = Self(
-        title: "Min segment duration",
+        title: String(localized: "Min segment duration"),
         range: 0.0 ... 5.0,
         step: 0.1,
         format: "%.1f",
         suffix: "s",
-        help: "Skip embedding extraction for segments shorter than this duration. Larger values trade recall for stability.",
+        help: String(localized: "Skip embedding extraction for segments shorter than this duration. Larger values trade recall for stability."),
     )
 }
 

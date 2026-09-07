@@ -443,7 +443,7 @@ enum TranscriptionError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .modelNotLoaded: "WhisperKit model not loaded"
+        case .modelNotLoaded: String(localized: "WhisperKit model not loaded")
         case .streamingNotSupported: "This engine does not support sample-based live transcription"
         }
     }

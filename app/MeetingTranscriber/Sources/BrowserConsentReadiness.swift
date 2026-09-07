@@ -76,8 +76,8 @@ enum BrowserConsentReadiness: Equatable {
     var headline: String? {
         switch self {
         case .disabled, .ready: nil
-        case .denied, .undetermined, .quiet, .bannersOff: "Browser meetings cannot be recorded."
-        case .timeSensitiveOff: "Browser meetings can be missed."
+        case .denied, .undetermined, .quiet, .bannersOff: String(localized: "Browser meetings cannot be recorded.")
+        case .timeSensitiveOff: String(localized: "Browser meetings can be missed.")
         }
     }
 
@@ -90,31 +90,41 @@ enum BrowserConsentReadiness: Equatable {
             nil
 
         case .denied:
-            "Notifications are turned off for Meeting Transcriber, so the "
-                + "\"record this meeting?\" prompt cannot appear and browser meetings "
-                + "will never be recorded. Allow notifications in System Settings."
+            Localized.lookup(
+                "Notifications are turned off for Meeting Transcriber, so the "
+                    + "\"record this meeting?\" prompt cannot appear and browser meetings "
+                    + "will never be recorded. Allow notifications in System Settings.",
+            )
 
         case .undetermined:
-            "Meeting Transcriber has not been allowed to send notifications yet. "
-                + "Until it is, the \"record this meeting?\" prompt cannot appear and "
-                + "browser meetings will never be recorded."
+            Localized.lookup(
+                "Meeting Transcriber has not been allowed to send notifications yet. "
+                    + "Until it is, the \"record this meeting?\" prompt cannot appear and "
+                    + "browser meetings will never be recorded.",
+            )
 
         case .quiet:
-            "Notifications are delivered quietly, so the \"record this meeting?\" "
-                + "prompt arrives without a banner and usually expires unanswered. "
-                + "Browser meetings will rarely be recorded. Allow banners in System Settings."
+            Localized.lookup(
+                "Notifications are delivered quietly, so the \"record this meeting?\" "
+                    + "prompt arrives without a banner and usually expires unanswered. "
+                    + "Browser meetings will rarely be recorded. Allow banners in System Settings.",
+            )
 
         case .bannersOff:
-            "Notifications are allowed but show no banner, so the \"record this meeting?\" "
-                + "prompt goes straight to Notification Center and expires unanswered. "
-                + "Browser meetings will rarely be recorded. Set the alert style to "
-                + "Banners or Alerts in System Settings."
+            Localized.lookup(
+                "Notifications are allowed but show no banner, so the \"record this meeting?\" "
+                    + "prompt goes straight to Notification Center and expires unanswered. "
+                    + "Browser meetings will rarely be recorded. Set the alert style to "
+                    + "Banners or Alerts in System Settings.",
+            )
 
         case .timeSensitiveOff:
-            "Time Sensitive notifications are turned off for Meeting Transcriber, so the "
-                + "\"record this meeting?\" prompt is hidden while a Focus mode or Do Not "
-                + "Disturb is on. Browser meetings started during Focus will not be "
-                + "recorded. Allow Time Sensitive notifications in System Settings."
+            Localized.lookup(
+                "Time Sensitive notifications are turned off for Meeting Transcriber, so the "
+                    + "\"record this meeting?\" prompt is hidden while a Focus mode or Do Not "
+                    + "Disturb is on. Browser meetings started during Focus will not be "
+                    + "recorded. Allow Time Sensitive notifications in System Settings.",
+            )
         }
     }
 }

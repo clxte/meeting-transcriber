@@ -33,8 +33,8 @@ enum MicrophoneRecordingAvailability: Equatable {
     var disabledReason: String? {
         switch self {
         case .ready: nil
-        case .recordingActive: "A recording is already running"
-        case .blockedByNoMicSetting: "Turn off \"No Microphone\" in Settings to record the microphone"
+        case .recordingActive: String(localized: "A recording is already running")
+        case .blockedByNoMicSetting: String(localized: "Turn off \"No Microphone\" in Settings to record the microphone")
         }
     }
 

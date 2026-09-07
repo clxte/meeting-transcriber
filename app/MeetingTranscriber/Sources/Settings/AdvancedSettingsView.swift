@@ -35,28 +35,28 @@ struct AdvancedSettingsView: View {
         Form {
             Section("Permissions") {
                 PermissionRow(
-                    label: "Screen Recording",
+                    label: String(localized: "Screen Recording"),
                     detail: Self.screenRecordingDetail,
                     granted: screenRecordingOK,
-                    help: "\(SystemSettingsPaths.screenRecording) → enable Meeting Transcriber",
+                    help: String(localized: "\(SystemSettingsPaths.screenRecording) → enable Meeting Transcriber"),
                     settingsURL: PrivacyPane.screenCapture.url,
                 )
                 PermissionRow(
-                    label: "Microphone",
-                    detail: micPermission == .authorized ? "Granted"
-                        : micPermission == .notDetermined ? "Will prompt on first recording"
-                        : "Denied — click to open Settings",
+                    label: String(localized: "Microphone"),
+                    detail: micPermission == .authorized ? String(localized: "Granted")
+                        : micPermission == .notDetermined ? String(localized: "Will prompt on first recording")
+                        : String(localized: "Denied — click to open Settings"),
                     granted: micPermission == .authorized,
                     warning: micPermission == .notDetermined,
-                    help: "System Settings → Privacy & Security → Microphone → enable Meeting Transcriber",
+                    help: String(localized: "System Settings → Privacy & Security → Microphone → enable Meeting Transcriber"),
                     settingsURL: PrivacyPane.microphone.url,
                 )
                 PermissionRow(
-                    label: "Accessibility",
-                    detail: "Optional — enables mute detection and meeting naming",
+                    label: String(localized: "Accessibility"),
+                    detail: String(localized: "Optional — enables mute detection and meeting naming"),
                     granted: accessibilityOK,
                     optional: true,
-                    help: "System Settings → Privacy & Security → Accessibility → enable Meeting Transcriber",
+                    help: String(localized: "System Settings → Privacy & Security → Accessibility → enable Meeting Transcriber"),
                     settingsURL: PrivacyPane.accessibility.url,
                 )
 
@@ -134,7 +134,7 @@ struct AdvancedSettingsView: View {
                     .textSelection(.enabled)
                 LabeledContent("ffmpeg") {
                     Label(
-                        FFmpegHelper.isAvailable ? "Available" : "Not installed",
+                        FFmpegHelper.isAvailable ? String(localized: "Available") : String(localized: "Not installed"),
                         systemImage: FFmpegHelper.isAvailable ? "checkmark.circle.fill" : "xmark.circle.fill",
                     )
                     .foregroundStyle(FFmpegHelper.isAvailable ? .green : .secondary)
@@ -147,9 +147,9 @@ struct AdvancedSettingsView: View {
     }
 
     #if APPSTORE
-        private static let screenRecordingDetail = "Required for app audio capture"
+        private static let screenRecordingDetail = String(localized: "Required for app audio capture")
     #else
-        private static let screenRecordingDetail = "Required for meeting detection and app audio capture"
+        private static let screenRecordingDetail = String(localized: "Required for meeting detection and app audio capture")
     #endif
 
     private static let versionString: String = {
@@ -169,7 +169,7 @@ struct AdvancedSettingsView: View {
         guard let url = Bundle.main.executableURL,
               let attrs = try? FileManager.default.attributesOfItem(atPath: url.path),
               let date = attrs[.modificationDate] as? Date
-        else { return "unknown" }
+        else { return String(localized: "unknown") }
         return fmt.string(from: date)
     }()
 

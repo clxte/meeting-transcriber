@@ -12,7 +12,7 @@ struct TranscriptionSettingsView: View {
     @State private var pendingCaptionEnable = false
 
     private static let whisperKitModels: [(variant: String, label: String)] = [
-        ("openai_whisper-large-v3-v20240930_turbo", "Large V3 Turbo (recommended)"),
+        ("openai_whisper-large-v3-v20240930_turbo", String(localized: "Large V3 Turbo (recommended)")),
         ("openai_whisper-large-v3-v20240930", "Large V3"),
         ("openai_whisper-large-v2", "Large V2"),
         ("openai_whisper-small", "Small"),
@@ -141,10 +141,7 @@ struct TranscriptionSettingsView: View {
                 Button("Cancel", role: .cancel) {}
                 Button("Enable") { settings.liveTranscriptionEnabled = true }
             } message: {
-                Text(
-                    "Live captions in this language use a roughly 0.6 GB on-device model, "
-                        + "downloaded once on first use.",
-                )
+                Text("Live captions in this language use a roughly 0.6 GB on-device model, downloaded once on first use.")
             }
 
             Text(captionBackendFootnote)
@@ -175,21 +172,27 @@ struct TranscriptionSettingsView: View {
     static func vocabularyHelpText(for engine: TranscriptionEngineSetting) -> String {
         switch engine {
         case .parakeet:
-            "Text file with one term per line. Parakeet uses CTC rescoring for saved transcription. "
-                + "Live captions do not use CTC vocabulary rescoring."
+            Localized.lookup(
+                "Text file with one term per line. Parakeet uses CTC rescoring for saved transcription. "
+                    + "Live captions do not use CTC vocabulary rescoring.",
+            )
 
         case .whisperKit:
-            "Text file with one term per line. Enable the experimental custom vocabulary prompt to pass a "
-                + "soft 32-token decoder hint to WhisperKit; it is not a guaranteed correction. "
-                + "It applies to live captions only when they use "
-                + "WhisperKit; language-specific live backends do not use it."
+            Localized.lookup(
+                "Text file with one term per line. Enable the experimental custom vocabulary prompt to pass a "
+                    + "soft 32-token decoder hint to WhisperKit; it is not a guaranteed correction. "
+                    + "It applies to live captions only when they use "
+                    + "WhisperKit; language-specific live backends do not use it.",
+            )
         }
     }
 
-    static let whisperKitVocabularyPromptHelpText = "Experimental. WhisperKit treats the vocabulary as a decoder hint, "
-        + "not a correction. In a dense four-speaker English evaluation, a 25-content-token prompt "
-        + "from this 32-token budget raised word error rate from 29% to 77% and deletions from 73 to 241. "
-        + "It can omit whole sentences. Results vary by audio; prefer Parakeet for vocabulary boosting."
+    static let whisperKitVocabularyPromptHelpText = Localized.lookup(
+        "Experimental. WhisperKit treats the vocabulary as a decoder hint, "
+            + "not a correction. In a dense four-speaker English evaluation, a 25-content-token prompt "
+            + "from this 32-token budget raised word error rate from 29% to 77% and deletions from 73 to 241. "
+            + "It can omit whole sentences. Results vary by audio; prefer Parakeet for vocabulary boosting.",
+    )
 
     /// Whether any Nemotron multilingual model variant is already on disk.
     private var nemotronModelDownloaded: Bool {
@@ -207,17 +210,23 @@ struct TranscriptionSettingsView: View {
     private var captionBackendFootnote: String {
         switch settings.activeEngineLanguageOrNil {
         case .none:
-            "Caption backend follows your transcription language. Auto-detect uses the "
-                + "standard re-transcribe engine; set a specific language for low-latency "
-                + "streaming captions."
+            Localized.lookup(
+                "Caption backend follows your transcription language. Auto-detect uses the "
+                    + "standard re-transcribe engine; set a specific language for low-latency "
+                    + "streaming captions.",
+            )
 
         case "en":
-            "Caption backend follows your transcription language. English uses the "
-                + "low-latency Parakeet streaming model."
+            Localized.lookup(
+                "Caption backend follows your transcription language. English uses the "
+                    + "low-latency Parakeet streaming model.",
+            )
 
         default:
-            "Caption backend follows your transcription language. It uses the low-latency "
-                + "Nemotron multilingual streaming model (~0.6-0.7 GB, downloads on first use)."
+            Localized.lookup(
+                "Caption backend follows your transcription language. It uses the low-latency "
+                    + "Nemotron multilingual streaming model (~0.6-0.7 GB, downloads on first use).",
+            )
         }
     }
 
@@ -226,15 +235,17 @@ struct TranscriptionSettingsView: View {
         // captions are always available; this just explains the overlay. If a
         // future engine returns `supportsLiveTranscription == false`, reintroduce
         // a conditional "unsupported" message gated on that + `englishStreaming`.
-        "Captions appear in a click-through overlay at the bottom of "
-            + "the screen during recording. Hold ⌥ (Option) to drag "
-            + "it; the position is remembered across sessions. "
-            + "Caption text is **not** logged by default — enable "
-            + "\"Verbose Diagnostic Logging\" in Advanced to see "
-            + "partials + finals in Console.app (subsystem "
-            + "com.meetingtranscriber, category LiveTranscription). "
-            + "Engine changes take effect on the next recording — "
-            + "switching mid-recording is not supported."
+        Localized.lookup(
+            "Captions appear in a click-through overlay at the bottom of "
+                + "the screen during recording. Hold ⌥ (Option) to drag "
+                + "it; the position is remembered across sessions. "
+                + "Caption text is **not** logged by default — enable "
+                + "\"Verbose Diagnostic Logging\" in Advanced to see "
+                + "partials + finals in Console.app (subsystem "
+                + "com.meetingtranscriber, category LiveTranscription). "
+                + "Engine changes take effect on the next recording — "
+                + "switching mid-recording is not supported.",
+        )
     }
 
     private var activeEngine: any TranscribingEngine {

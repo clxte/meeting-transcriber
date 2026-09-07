@@ -21,7 +21,12 @@ public enum SystemSettingsPaths {
     /// Pure form of ``screenRecording`` so both OS branches are unit-testable
     /// without faking the running OS version.
     static func screenRecordingPath(sequoiaOrLater: Bool) -> String {
-        let pane = sequoiaOrLater ? "Screen & System Audio Recording" : "Screen Recording"
-        return "System Settings → Privacy & Security → \(pane)"
+        // Localized against Bundle.main (the app bundle), not this library's
+        // module bundle: the app is what ships the translation tables, and the
+        // fallback for a missing entry is the English literal either way.
+        let pane = sequoiaOrLater
+            ? String(localized: "Screen & System Audio Recording")
+            : String(localized: "Screen Recording")
+        return String(localized: "System Settings → Privacy & Security → \(pane)")
     }
 }

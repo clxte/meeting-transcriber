@@ -14,9 +14,9 @@ enum StageKind: String, Codable, CaseIterable {
 
     var label: String {
         switch self {
-        case .transcribing: "Transcribing"
-        case .diarizing: "Diarizing"
-        case .generatingProtocol: "Protocol"
+        case .transcribing: String(localized: "Transcribing")
+        case .diarizing: String(localized: "Diarizing")
+        case .generatingProtocol: String(localized: "Protocol")
         }
     }
 

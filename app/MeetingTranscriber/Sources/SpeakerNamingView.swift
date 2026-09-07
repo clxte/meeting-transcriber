@@ -453,7 +453,7 @@ struct SpeakerNamingView: View { // swiftlint:disable:this type_body_length
     private func nameField(for index: Int, label: String) -> some View {
         AccessibleTextField(
             text: $names[index],
-            placeholder: "Name",
+            placeholder: String(localized: "Name"),
             identifier: "speaker-name-\(label)",
         )
     }
@@ -505,12 +505,12 @@ struct SpeakerNamingView: View { // swiftlint:disable:this type_body_length
                     }
                     if hidden > 0 {
                         chipMoreButton(
-                            label: "More (\(hidden))…",
+                            label: String(localized: "More (\(hidden))…"),
                             identifier: A11yID.knownMore(speakerLabel),
                         ) { knownExpanded.insert(index) }
                     } else if expanded, ranked.count > Self.knownChipsCollapsedLimit {
                         chipMoreButton(
-                            label: "Less",
+                            label: String(localized: "Less"),
                             identifier: A11yID.knownLess(speakerLabel),
                         ) { knownExpanded.remove(index) }
                     }

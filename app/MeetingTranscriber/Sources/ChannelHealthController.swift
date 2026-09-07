@@ -315,7 +315,7 @@ final class ChannelHealthController {
         case .started:
             recordingSilentActive = true
             notifier.notify(
-                title: "Recording Appears Silent",
+                title: String(localized: "Recording Appears Silent"),
                 body: Self.silentRecordingMessage(for: channels),
                 // Suppressible on purpose, see `captureAlert(channel:fault:)`: an auto-detected
                 // recording starts when the detector confirms rather than when
@@ -401,7 +401,7 @@ final class ChannelHealthController {
     nonisolated static func gaveUpAlert(
         channel: AudioChannel,
     ) -> (title: String, body: String, urgency: NotificationUrgency) {
-        ("Capture Channel Lost", captureGaveUpMessage(for: channel), .timeSensitive)
+        (String(localized: "Capture Channel Lost"), captureGaveUpMessage(for: channel), .timeSensitive)
     }
 
     /// Title, body and Focus behaviour for a channel that stopped delivering.
@@ -424,7 +424,7 @@ final class ChannelHealthController {
         }
         let suppressible = fault == .digitalSilence && channel == .mic
         return (
-            "Capture Channel Silent",
+            String(localized: "Capture Channel Silent"),
             faultMessage(channel: channel, fault: fault, everCarriedSignal: everCarriedSignal),
             suppressible ? .standard : .timeSensitive,
         )
@@ -487,42 +487,50 @@ final class ChannelHealthController {
             captureGaveUpMessage(for: channel)
 
         case (.app, .noBuffers, _):
-            "The app-audio channel stopped delivering audio to this recording. Switch the system "
-                + "output device to another one and back: that rebuilds the tap on the meeting "
-                + "app, which has died."
+            Localized.lookup(
+                "The app-audio channel stopped delivering audio to this recording. Switch the system "
+                    + "output device to another one and back: that rebuilds the tap on the meeting "
+                    + "app, which has died.",
+            )
 
         case (.app, .digitalSilence, true):
-            "The app-audio channel carried audio earlier in this recording and now delivers only "
-                + "silence. Switch the system output device to another one and back: that "
-                + "rebuilds the tap. This is not a permission problem, because a tap that is not "
-                + "allowed to hear the app never delivers audio at all. If the silence persists, "
-                + "the meeting app has moved its output to a path the tap does not follow."
+            Localized.lookup(
+                "The app-audio channel carried audio earlier in this recording and now delivers only "
+                    + "silence. Switch the system output device to another one and back: that "
+                    + "rebuilds the tap. This is not a permission problem, because a tap that is not "
+                    + "allowed to hear the app never delivers audio at all. If the silence persists, "
+                    + "the meeting app has moved its output to a path the tap does not follow.",
+            )
 
+        // A single interpolated literal, not a `Localized.lookup` concatenation:
+        // the pane path varies by macOS version, so only a format key (`%@`)
+        // gives this message one table entry.
         case (.app, .digitalSilence, false):
-            "The app-audio channel has delivered only silence since this recording started, "
-                + "while the microphone carries audio. Check that Meeting Transcriber is enabled "
-                + "under \(SystemSettingsPaths.screenRecording), and whether a third-party audio "
-                + "tool (SoundSource, Audio Hijack, Loopback, Krisp) is intercepting the meeting "
-                + "app's audio."
+            String(
+                localized: "The app-audio channel has delivered only silence since this recording started, while the microphone carries audio. Check that Meeting Transcriber is enabled under \(SystemSettingsPaths.screenRecording), and whether a third-party audio tool (SoundSource, Audio Hijack, Loopback, Krisp) is intercepting the meeting app's audio.",
+            )
 
         case (.mic, .noBuffers, _):
-            "The microphone stopped delivering audio to this recording. "
-                + "Check that the input device is still connected, and that Meeting Transcriber "
-                + "still has permission to use the microphone."
+            Localized.lookup(
+                "The microphone stopped delivering audio to this recording. "
+                    + "Check that the input device is still connected, and that Meeting Transcriber "
+                    + "still has permission to use the microphone.",
+            )
 
         case (.mic, .digitalSilence, _):
-            "The microphone is delivering silence, not quiet audio. "
-                + "Check the mute switch on your headset or input device, and the input mute "
-                + "in macOS. A meeting app's own mute button does not cause this."
+            Localized.lookup(
+                "The microphone is delivering silence, not quiet audio. "
+                    + "Check the mute switch on your headset or input device, and the input mute "
+                    + "in macOS. A meeting app's own mute button does not cause this.",
+            )
         }
     }
 
     nonisolated static func captureGaveUpMessage(for channel: AudioChannel) -> String {
-        let track = channel == .mic ? "Microphone" : "App-audio"
-        return "\(track) capture could not recover after an audio device change and has stopped "
-            + "for this recording. The rest of the recording continues. "
-            + "Restart Meeting Transcriber to bring the channel back, and to release the extra CPU "
-            + "a stuck restart attempt may still be holding."
+        let track = channel == .mic ? String(localized: "Microphone") : String(localized: "App-audio")
+        return String(
+            localized: "\(track) capture could not recover after an audio device change and has stopped for this recording. The rest of the recording continues. Restart Meeting Transcriber to bring the channel back, and to release the extra CPU a stuck restart attempt may still be holding.",
+        )
     }
 
     /// Message for a recording where every channel it opened has stayed at the
@@ -535,22 +543,28 @@ final class ChannelHealthController {
     nonisolated static func silentRecordingMessage(for channels: CapturedChannels) -> String {
         switch (channels.mic, channels.app) {
         case (true, false):
-            "The microphone has been silent since the recording started. "
-                + "Check that the right input device is selected and that it is not muted."
+            Localized.lookup(
+                "The microphone has been silent since the recording started. "
+                    + "Check that the right input device is selected and that it is not muted.",
+            )
 
         case (false, true):
             // "No Microphone (app audio only)". The mic reads a permanent -120
             // here, so this fires on any silent app track — and advice about an
             // input device would point at one the recording never opened.
-            "The app-audio channel has been silent since the recording started. "
-                + "Check that the meeting app is actually playing audio, and whether a "
-                + "third-party audio tool (SoundSource, Audio Hijack, Loopback, Krisp) is "
-                + "intercepting it."
+            Localized.lookup(
+                "The app-audio channel has been silent since the recording started. "
+                    + "Check that the meeting app is actually playing audio, and whether a "
+                    + "third-party audio tool (SoundSource, Audio Hijack, Loopback, Krisp) is "
+                    + "intercepting it.",
+            )
 
         default:
-            "Both capture channels have been silent since the recording started. "
-                + "Check the audio routing — the meeting app may have claimed the mic "
-                + "in exclusive mode (e.g. AirPods HFP), or the system input device may be muted."
+            Localized.lookup(
+                "Both capture channels have been silent since the recording started. "
+                    + "Check the audio routing — the meeting app may have claimed the mic "
+                    + "in exclusive mode (e.g. AirPods HFP), or the system input device may be muted.",
+            )
         }
     }
 }

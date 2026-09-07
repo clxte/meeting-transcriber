@@ -26,9 +26,9 @@ enum PermissionProblem: Equatable {
 
     var permissionName: String {
         switch self {
-        case .screenRecordingDenied, .screenRecordingBroken: "Screen Recording"
-        case .microphoneDenied, .microphoneBroken: "Microphone"
-        case .accessibilityDenied, .accessibilityBroken: "Accessibility"
+        case .screenRecordingDenied, .screenRecordingBroken: String(localized: "Screen Recording")
+        case .microphoneDenied, .microphoneBroken: String(localized: "Microphone")
+        case .accessibilityDenied, .accessibilityBroken: String(localized: "Accessibility")
         }
     }
 
@@ -41,8 +41,8 @@ enum PermissionProblem: Equatable {
 
     var description: String {
         isBroken
-            ? "\(permissionName) looks enabled but isn't working — toggle it off and on in System Settings"
-            : "\(permissionName) permission denied"
+            ? String(localized: "\(permissionName) looks enabled but isn't working — toggle it off and on in System Settings")
+            : String(localized: "\(permissionName) permission denied")
     }
 
     /// Compact, PII-free token for `os_log` (safe to log with `privacy: .public`):

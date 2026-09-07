@@ -195,7 +195,7 @@ final class LiveTranscriptionController {
         // it for the overlay indicator + the diagnostic log.
         let engine: String? = usingStreamingSession
             ? (captionStrategy == .nemotronStreaming ? "Nemotron" : "Parakeet EOU")
-            : (micPipeline != nil ? "Re-transcribe" : nil)
+            : (micPipeline != nil ? String(localized: "Re-transcribe") : nil)
         let backend = engine.map { name in
             engineLanguage.map { "\(name) · \($0.uppercased())" } ?? name
         }

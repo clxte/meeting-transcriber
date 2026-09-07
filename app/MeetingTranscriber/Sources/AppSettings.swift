@@ -59,8 +59,8 @@ enum DiarizerMode: String, CaseIterable, Codable {
 
     var label: String {
         switch self {
-        case .offline: "Offline (Clustering)"
-        case .sortformer: "Sortformer (Overlap-aware)"
+        case .offline: String(localized: "Offline (Clustering)")
+        case .sortformer: String(localized: "Sortformer (Overlap-aware)")
         }
     }
 
@@ -92,9 +92,9 @@ enum ProtocolProvider: String, CaseIterable {
             case .claudeCLI: "Claude CLI"
         #endif
 
-        case .openAICompatible: "OpenAI-Compatible API"
+        case .openAICompatible: String(localized: "OpenAI-Compatible API")
 
-        case .none: "None (Transcript Only)"
+        case .none: String(localized: "None (Transcript Only)")
         }
     }
 }

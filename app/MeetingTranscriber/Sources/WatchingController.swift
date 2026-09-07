@@ -378,7 +378,7 @@ final class WatchingController {
     func startMicrophoneRecording() {
         guard !settings.noMic else {
             notifier.notify(
-                title: "Microphone Recording Refused",
+                title: String(localized: "Microphone Recording Refused"),
                 body: MicrophoneRecordingAvailability.blockedByNoMicSetting.disabledReason ?? "",
             )
             return
@@ -437,8 +437,8 @@ final class WatchingController {
             // state it was opened in) and from the automation API alike.
             guard Self.mayTakeOverLoop(in: loop.state) else {
                 notifier.notify(
-                    title: "Recording Refused",
-                    body: "A meeting is already being recorded",
+                    title: String(localized: "Recording Refused"),
+                    body: String(localized: "A meeting is already being recorded"),
                 )
                 return .blockedByActiveRecording
             }
@@ -497,12 +497,12 @@ final class WatchingController {
             // same value the job and the record-only sidecar get, so the
             // notification cannot end up naming the recording something else.
             notifier.notify(
-                title: "Manual Recording",
-                body: "Recording: \(loop.manualRecordingInfo?.title ?? "")",
+                title: String(localized: "Manual Recording"),
+                body: String(localized: "Recording: \(loop.manualRecordingInfo?.title ?? "")"),
             )
             return .started
         } catch {
-            notifier.notify(title: "Error", body: error.localizedDescription)
+            notifier.notify(title: String(localized: "Error"), body: error.localizedDescription)
             watchLoop = nil
             // The permission arm is told apart by the error the gate raises, not
             // by re-asking the health check here: only the loop knows which
@@ -565,8 +565,8 @@ final class WatchingController {
             case .recording:
                 if notifyOnRecording, let meeting = loop?.currentMeeting {
                     notifier.notify(
-                        title: "Meeting Detected",
-                        body: "Recording: \(meeting.windowTitle)",
+                        title: String(localized: "Meeting Detected"),
+                        body: String(localized: "Recording: \(meeting.windowTitle)"),
                     )
                 }
                 // No source means no live recording, so there are no channels to
@@ -579,7 +579,7 @@ final class WatchingController {
 
             case .error:
                 if let err = loop?.lastError {
-                    notifier.notify(title: "Error", body: err)
+                    notifier.notify(title: String(localized: "Error"), body: err)
                 }
                 self?.channelHealth.stop()
 

@@ -318,7 +318,7 @@ extension SpeakerNamingSession {
             // speakers the re-run added won't reach the transcript.
             delegate?.addWarning(
                 id: jobID,
-                "This recording has no saved transcript segments, so the re-run's speaker changes could not be applied to the transcript",
+                String(localized: "This recording has no saved transcript segments, so the re-run's speaker changes could not be applied to the transcript"),
             )
             return
         }

@@ -47,8 +47,8 @@ extension WatchLoop {
         consentTask = Task { [weak self] in
             guard let self else { return }
             let answer = await notifier.askToRecord(
-                title: "Record browser meeting?",
-                body: "A meeting is active in \(browserName).",
+                title: String(localized: "Record browser meeting?"),
+                body: String(localized: "A meeting is active in \(browserName)."),
             )
             finishConsent(for: meeting, answer: answer)
         }

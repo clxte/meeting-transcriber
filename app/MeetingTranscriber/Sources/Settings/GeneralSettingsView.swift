@@ -167,9 +167,7 @@ struct GeneralSettingsView: View {
                 Text("Record-only mode is active.")
                     .font(.callout.weight(.semibold))
                 Text(
-                    "Files land in `\(display)`. Each recording gets a `<timestamp>_meta.json` " +
-                        "sidecar next to its WAVs. No transcription, diarization, or protocol " +
-                        "generation runs on this device.",
+                    "Files land in `\(display)`. Each recording gets a `<timestamp>_meta.json` sidecar next to its WAVs. No transcription, diarization, or protocol generation runs on this device.",
                 )
                 .font(.caption)
                 .foregroundStyle(.secondary)

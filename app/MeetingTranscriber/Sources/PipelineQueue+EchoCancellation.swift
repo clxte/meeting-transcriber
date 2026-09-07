@@ -47,7 +47,7 @@ extension PipelineQueue {
             logger.warning("echo_cancel skipped: no model available")
             addWarning(
                 id: jobID,
-                "Echo cancellation is on but its model is missing, so the microphone track was left as recorded.",
+                String(localized: "Echo cancellation is on but its model is missing, so the microphone track was left as recorded."),
             )
             return false
         }
@@ -77,7 +77,7 @@ extension PipelineQueue {
             )
             addWarning(
                 id: jobID,
-                "Echo cancellation failed, so the microphone track was left as recorded.",
+                String(localized: "Echo cancellation failed, so the microphone track was left as recorded."),
             )
             return false
         }
@@ -141,7 +141,7 @@ extension PipelineQueue {
         )
         addWarning(
             id: jobID,
-            "Echo cancellation finished but its result could not be used, so the microphone track was left as recorded.",
+            String(localized: "Echo cancellation finished but its result could not be used, so the microphone track was left as recorded."),
         )
         return false
     }
@@ -158,13 +158,13 @@ extension PipelineQueue {
     private static func unconfirmedWarning(for effect: EchoCancellationSelfCheck.Effect) -> String {
         switch effect {
         case .ineffective:
-            "Echo cancellation ran but removed almost nothing, so the microphone track was left as recorded."
+            String(localized: "Echo cancellation ran but removed almost nothing, so the microphone track was left as recorded.")
 
         case .damagedControl:
-            "Echo cancellation altered parts of the recording where there was no echo, so the microphone track was left as recorded."
+            String(localized: "Echo cancellation altered parts of the recording where there was no echo, so the microphone track was left as recorded.")
 
         case .indeterminate:
-            "Echo cancellation could not be confirmed on this recording, so the microphone track was left as recorded."
+            String(localized: "Echo cancellation could not be confirmed on this recording, so the microphone track was left as recorded.")
 
         case .removed:
             ""

@@ -262,7 +262,7 @@ struct OpenAIProtocolGenerator: ProtocolGenerating {
         // Accept either the API base URL (.../v1) or the full chat-completions
         // URL (.../v1/chat/completions); both resolve to the same base + /models.
         guard let entered = URL(string: endpoint) else {
-            return .failure(ProtocolError.connectionFailed("Invalid endpoint URL"))
+            return .failure(ProtocolError.connectionFailed(String(localized: "Invalid endpoint URL")))
         }
 
         let modelsURL = apiBaseURL(from: entered).appendingPathComponent("models")
@@ -280,7 +280,7 @@ struct OpenAIProtocolGenerator: ProtocolGenerating {
                   (200 ... 299).contains(httpResponse.statusCode)
             else {
                 let code = (response as? HTTPURLResponse)?.statusCode ?? 0
-                return .failure(ProtocolError.httpError(code, "Failed to fetch models"))
+                return .failure(ProtocolError.httpError(code, String(localized: "Failed to fetch models")))
             }
 
             guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],

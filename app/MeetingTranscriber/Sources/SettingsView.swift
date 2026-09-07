@@ -103,12 +103,12 @@ private enum SettingsTab: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .general: "General"
-        case .audio: "Audio"
-        case .transcription: "Transcription"
-        case .speakers: "Speakers"
-        case .output: "Output"
-        case .advanced: "Advanced"
+        case .general: String(localized: "General")
+        case .audio: String(localized: "Audio")
+        case .transcription: String(localized: "Transcription")
+        case .speakers: String(localized: "Speakers")
+        case .output: String(localized: "Output")
+        case .advanced: String(localized: "Advanced")
         }
     }
 

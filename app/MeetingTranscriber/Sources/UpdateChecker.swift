@@ -96,7 +96,7 @@ enum UpdateCheckerError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case let .networkError(detail): "Network error: \(detail)"
+        case let .networkError(detail): String(localized: "Network error: \(detail)")
         }
     }
 }

@@ -22,7 +22,7 @@ struct ProcessingStatsView: View {
         }
 
         var label: String {
-            "Last \(rawValue) days"
+            String(localized: "Last \(rawValue) days")
         }
     }
 
@@ -85,7 +85,7 @@ struct ProcessingStatsView: View {
     /// "Stage · mode · engine" (mode omitted when nil, e.g. transcription);
     /// the trailing `Engine` suffix is trimmed for brevity.
     private func configLabel(_ config: StageConfig) -> String {
-        let raw = config.engine ?? "unknown"
+        let raw = config.engine ?? String(localized: "unknown")
         let engine = raw.hasSuffix("Engine") ? String(raw.dropLast("Engine".count)) : raw
         var parts = [config.stage.label]
         if let mode = config.diarizerMode { parts.append(mode) }

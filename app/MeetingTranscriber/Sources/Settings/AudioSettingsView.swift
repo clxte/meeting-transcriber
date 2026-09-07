@@ -46,7 +46,7 @@ private struct VoiceActivityDetectionSection: View {
     var body: some View {
         Section("Voice Activity Detection") {
             HelpfulToggle(
-                title: "Voice Activity Detection (VAD)",
+                title: String(localized: "Voice Activity Detection (VAD)"),
                 help: SettingsHelp.vad,
                 isOn: $settings.vadEnabled,
             )
@@ -76,14 +76,14 @@ private struct EchoSection: View {
     var body: some View {
         Section("Echo") {
             HelpfulToggle(
-                title: "Remove echoed remote speech before transcribing",
+                title: String(localized: "Remove echoed remote speech before transcribing"),
                 help: SettingsHelp.echoCancellation,
                 isOn: $settings.echoCancellationEnabled,
             )
             .accessibilityIdentifier(A11yID.echoCancellationToggle)
 
             HelpfulToggle(
-                title: "Remove echoed remote speech from the transcript",
+                title: String(localized: "Remove echoed remote speech from the transcript"),
                 help: SettingsHelp.echoDedup,
                 isOn: $settings.echoDedupEnabled,
             )
@@ -105,7 +105,7 @@ private struct PerChannelIndicatorSection: View {
     var body: some View {
         Section("Per-Channel Indicator") {
             HelpfulToggle(
-                title: "Detect Silent Capture Channel",
+                title: String(localized: "Detect Silent Capture Channel"),
                 help: SettingsHelp.silentCaptureChannel,
                 isOn: $settings.perChannelIndicatorEnabled,
             )

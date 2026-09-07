@@ -6,7 +6,7 @@ import Foundation
 /// (no inline string literals inflating SwiftUI expression type-checking), and
 /// so the help copy is auditable in one place.
 enum SettingsHelp {
-    static let echoCancellation =
+    static let echoCancellation = Localized.lookup(
         """
         Removes the remote voices from the microphone audio with an on-device \
         model before it is transcribed. Because it works on the audio rather \
@@ -17,9 +17,10 @@ enum SettingsHelp {
         audio your devices captured. Only runs on recordings already reported \
         as affected, and replaces the transcript option below wherever both \
         are on.
-        """
+        """,
+    )
 
-    static let echoDedup =
+    static let echoDedup = Localized.lookup(
         """
         When a meeting is held on loudspeakers, the microphone picks the remote \
         voices up as well and they are transcribed twice. With this on, the \
@@ -31,23 +32,27 @@ enum SettingsHelp {
         It is not exact, which is why it is off: a quiet remark you make while \
         the far end is talking can be taken for part of the echo and left out \
         of the transcript.
-        """
+        """,
+    )
 
-    static let vad =
+    static let vad = Localized.lookup(
         "Voice Activity Detection trims silent stretches out of the recording before " +
-        "transcription, which speeds up processing and can improve accuracy. Enable it " +
-        "for long or pause-heavy recordings; disable it if you notice speech being cut off."
+            "transcription, which speeds up processing and can improve accuracy. Enable it " +
+            "for long or pause-heavy recordings; disable it if you notice speech being cut off.",
+    )
 
-    static let silentCaptureChannel =
+    static let silentCaptureChannel = Localized.lookup(
         "Turns the menu bar red when one capture channel goes silent while the other " +
-        "still carries audio, for example a muted microphone or a dropped app-audio tap. " +
-        "You are notified only when a channel actually stops delivering audio, not when " +
-        "it is merely quiet, so muting yourself is not reported as a fault. Turning this " +
-        "off removes the colour, not the warnings: a channel that stops delivering is " +
-        "still reported."
+            "still carries audio, for example a muted microphone or a dropped app-audio tap. " +
+            "You are notified only when a channel actually stops delivering audio, not when " +
+            "it is merely quiet, so muting yourself is not reported as a fault. Turning this " +
+            "off removes the colour, not the warnings: a channel that stops delivering is " +
+            "still reported.",
+    )
 
-    static let asymmetricSilenceWarning =
+    static let asymmetricSilenceWarning = Localized.lookup(
         "How long the condition must last before the indicator turns red and, for a channel " +
-        "that has stopped delivering, before you are notified. Lower reacts faster to a dead " +
-        "channel; higher ignores natural speaking pauses."
+            "that has stopped delivering, before you are notified. Lower reacts faster to a dead " +
+            "channel; higher ignores natural speaking pauses.",
+    )
 }

@@ -312,7 +312,7 @@ struct MeetingTranscriberApp: App {
 
     private func processAudioFiles() {
         let panel = NSOpenPanel()
-        panel.title = "Select Audio or Video Files"
+        panel.title = String(localized: "Select Audio or Video Files")
         panel.allowedContentTypes = AudioImportTypes.pickerTypes(
             ffmpegAvailable: FFmpegHelper.isAvailable,
         )

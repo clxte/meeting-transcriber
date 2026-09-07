@@ -128,11 +128,11 @@ extension PipelineQueue {
         let minutes = Int((analysedSeconds / 60).rounded())
         // "1 minutes" is reachable: the minimum firing configuration is three
         // ten-second windows, and the E2E fixture produces four.
-        let span = minutes == 1 ? "minute" : "minutes"
-        let head = "Speaker output was picked up by the microphone in \(analysis.affectedPercent)% of the \(minutes) \(span) analysed."
+        let span = minutes == 1 ? String(localized: "minute") : String(localized: "minutes")
+        let head = String(localized: "Speaker output was picked up by the microphone in \(analysis.affectedPercent)% of the \(minutes) \(span) analysed.")
         let tail = echoRemoved
-            ? "It was removed from the microphone track before transcription. Headphones still give the cleaner recording."
-            : "Remote speech may appear twice in the transcript. Using headphones avoids it."
+            ? String(localized: "It was removed from the microphone track before transcription. Headphones still give the cleaner recording.")
+            : String(localized: "Remote speech may appear twice in the transcript. Using headphones avoids it.")
         // Third sentence because the consequence is otherwise invisible: naming
         // speakers on this recording will look like it worked and teach the app
         // nothing. Saying so here is honest — the quarantine follows from this
@@ -140,7 +140,7 @@ extension PipelineQueue {
         // Unchanged by cancellation on purpose: the quarantine is a safety
         // measure, and lifting it on a repair that has never been watched in
         // the field is exactly the trade this project keeps refusing.
-        let db = "Voices from this recording are not added to the speaker database."
+        let db = String(localized: "Voices from this recording are not added to the speaker database.")
         addWarning(id: jobID, "\(head) \(tail) \(db)")
     }
 

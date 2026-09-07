@@ -31,16 +31,16 @@ enum TranscriberState: String, Codable {
 
     var label: String {
         switch self {
-        case .idle: "Idle"
-        case .watching: "Watching for Meetings..."
-        case .recording: "Recording"
-        case .transcribing: "Transcribing..."
-        case .generatingProtocol: "Generating Protocol..."
-        case .waitingForSpeakerCount: "Speaker Count"
-        case .waitingForSpeakerNames: "Name Speakers"
-        case .recordingDone: "Transcribing (Native)..."
-        case .protocolReady: "Protocol Ready"
-        case .error: "Error"
+        case .idle: String(localized: "Idle")
+        case .watching: String(localized: "Watching for Meetings...")
+        case .recording: String(localized: "Recording")
+        case .transcribing: String(localized: "Transcribing...")
+        case .generatingProtocol: String(localized: "Generating Protocol...")
+        case .waitingForSpeakerCount: String(localized: "Speaker Count")
+        case .waitingForSpeakerNames: String(localized: "Name Speakers")
+        case .recordingDone: String(localized: "Transcribing (Native)...")
+        case .protocolReady: String(localized: "Protocol Ready")
+        case .error: String(localized: "Error")
         }
     }
 

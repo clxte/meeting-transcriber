@@ -16,8 +16,8 @@ extension PipelineController {
                 logger.warning("Transcript delivery skipped: \(String(describing: reason), privacy: .public)")
                 notifyDeliveryProblem(
                     reason == .insecureEndpoint
-                        ? "Transcript endpoint must use https"
-                        : "Transcript endpoint is not a valid URL",
+                        ? String(localized: "Transcript endpoint must use https")
+                        : String(localized: "Transcript endpoint is not a valid URL"),
                 )
             }
             return
@@ -37,7 +37,7 @@ extension PipelineController {
                 try await webhook.send(delivery)
             } catch {
                 logger.error("Transcript delivery failed: \(String(describing: error), privacy: .public)")
-                self?.notifyDeliveryProblem("Could not send \"\(title)\" to your server")
+                self?.notifyDeliveryProblem(String(localized: "Could not send \"\(title)\" to your server"))
             }
         }
     }

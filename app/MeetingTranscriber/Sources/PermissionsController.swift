@@ -60,7 +60,7 @@ final class PermissionsController {
         if !problems.isEmpty, problems != previousProblems {
             PermissionHealthCheck.debugLog("[PermissionHealthCheck] Sending notification: \(result.notificationBody)")
             notifier.notify(
-                title: "Permission Problem",
+                title: String(localized: "Permission Problem"),
                 body: result.notificationBody,
             )
         }

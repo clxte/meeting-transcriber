@@ -11,13 +11,13 @@ enum CustomVocabularyValidation: Equatable {
 
     var message: String {
         switch self {
-        case .notConfigured: "No vocabulary file selected."
-        case .empty: "Vocabulary file contains no terms."
-        case .unavailable: "Vocabulary file cannot be read."
-        case .tooLarge: "Vocabulary file is too large."
-        case .tooManyTerms: "Vocabulary file contains too many terms."
-        case .termTooLong: "Vocabulary file contains a term that is too long."
-        case let .ready(termCount): "Vocabulary file can be read: \(termCount) unique term\(termCount == 1 ? "" : "s")."
+        case .notConfigured: String(localized: "No vocabulary file selected.")
+        case .empty: String(localized: "Vocabulary file contains no terms.")
+        case .unavailable: String(localized: "Vocabulary file cannot be read.")
+        case .tooLarge: String(localized: "Vocabulary file is too large.")
+        case .tooManyTerms: String(localized: "Vocabulary file contains too many terms.")
+        case .termTooLong: String(localized: "Vocabulary file contains a term that is too long.")
+        case let .ready(termCount): String(localized: "Vocabulary file can be read: \(termCount) unique term\(termCount == 1 ? "" : "s").")
         }
     }
 }

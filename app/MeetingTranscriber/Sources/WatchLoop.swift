@@ -166,7 +166,7 @@ class WatchLoop {
 
         update { next in
             next.phase = .watching
-            next.detail = "Polling for meetings..."
+            next.detail = String(localized: "Polling for meetings...")
         }
         logger.info("Watch mode started (poll: \(self.pollInterval)s, grace: \(self.endGracePeriod)s)")
 
@@ -252,7 +252,7 @@ class WatchLoop {
         update { next in
             next.phase = .recording
             next.manualRecordingInfo = ManualRecordingInfo(pid: pid, appName: appName, title: title)
-            next.detail = "Recording: \(title)"
+            next.detail = String(localized: "Recording: \(title)")
         }
 
         manualRecordingTask = Task { [weak self] in
@@ -333,12 +333,12 @@ class WatchLoop {
             try await handleMeeting(meeting)
         } catch {
             if error is CancellationError { return true }
-            let msg = "Recording error: \(error.localizedDescription)"
+            let msg = String(localized: "Recording error: \(error.localizedDescription)")
             logger.error("\(msg, privacy: .public)")
             update { next in
                 next.phase = .error
                 next.lastError = error.localizedDescription
-                next.detail = "Recording error: \(error.localizedDescription)"
+                next.detail = String(localized: "Recording error: \(error.localizedDescription)")
             }
             try? await sleepProvider(10)
         }
@@ -348,7 +348,7 @@ class WatchLoop {
         if !Task.isCancelled {
             update { next in
                 next.phase = .watching
-                next.detail = "Polling for meetings..."
+                next.detail = String(localized: "Polling for meetings...")
             }
         }
         return false
@@ -363,7 +363,7 @@ class WatchLoop {
         update { next in
             next.phase = .recording
             next.currentMeeting = meeting
-            next.detail = "Recording: \(title)"
+            next.detail = String(localized: "Recording: \(title)")
         }
 
         let source = RecordingSource.forApp(pid: meeting.windowPID, noMic: noMic)
@@ -469,14 +469,14 @@ class WatchLoop {
                 // meeting-title-derived basename in its description.
                 logger.error("Record-only: \(error.localizedDescription)")
                 update { next in
-                    next.lastError = "Record-only output failed: \(error.localizedDescription)"
+                    next.lastError = String(localized: "Record-only output failed: \(error.localizedDescription)")
                 }
                 // Record-only performs no state transition, so this notification
                 // is the entire report that a recording was lost. It breaks
                 // through Focus on the same test as `captureAlert`: a failed
                 // write has no benign reading.
                 notifier.notify(
-                    title: "Record-only output failed",
+                    title: String(localized: "Record-only output failed"),
                     body: error.localizedDescription,
                     urgency: .timeSensitive,
                 )

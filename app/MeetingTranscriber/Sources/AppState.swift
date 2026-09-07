@@ -476,7 +476,7 @@ final class AppState {
         if let loop = watching.watchLoop, loop.isActive {
             return loop.transcriberState.label
         }
-        return "Idle"
+        return String(localized: "Idle")
     }
 
     /// Whether the live permission health check currently reports a problem.

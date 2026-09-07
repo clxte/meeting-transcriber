@@ -48,7 +48,7 @@ extension PipelineQueue {
 
         var errorDescription: String? {
             switch self {
-            case .missingMixPath: "Single-source job missing mixPath"
+            case .missingMixPath: String(localized: "Single-source job missing mixPath")
             case .noMixAudioForDiarization: "No mix audio available for diarization"
             }
         }
@@ -87,7 +87,7 @@ extension PipelineQueue {
             // this one. It needs a terminal state of its own, or a caller
             // waiting on it waits forever.
             logger.info("[\(job.shortID, privacy: .public)] audio already running under another job")
-            updateJobState(id: job.id, to: .error, error: "This recording is already being processed")
+            updateJobState(id: job.id, to: .error, error: String(localized: "This recording is already being processed"))
         }
         isProcessing = false
         triggerProcessing()
@@ -185,7 +185,7 @@ extension PipelineQueue {
                 logger.warning(
                     "[\(ctx.shortID, privacy: .public)] transcription_empty inputRMSdBFS=\(inputRMS, privacy: .public). Likely silent input or ASR misconfiguration — check microphone level and engine settings.",
                 )
-                updateJobState(id: ctx.jobID, to: .error, error: "Empty transcript")
+                updateJobState(id: ctx.jobID, to: .error, error: String(localized: "Empty transcript"))
                 isProcessing = false
                 triggerProcessing()
                 return
@@ -436,7 +436,10 @@ extension PipelineQueue {
             logger.info("[\(ctx.shortID, privacy: .public)] diarization_skipped_no_timestamps")
             addWarning(
                 id: ctx.jobID,
-                "Speaker diarization needs per-utterance timestamps, which the selected transcription engine doesn't produce — speakers not labeled",
+                Localized.lookup(
+                    "Speaker diarization needs per-utterance timestamps, which the selected "
+                        + "transcription engine doesn't produce — speakers not labeled",
+                ),
             )
             return finalTranscript
         }
@@ -486,7 +489,7 @@ extension PipelineQueue {
             logger.info("[\(ctx.shortID, privacy: .public)] diarization_complete segments=\(segCount, privacy: .public)")
         } catch {
             logger.warning("[\(ctx.shortID, privacy: .public)] diarization_failed error=\(error.localizedDescription, privacy: .public)")
-            addWarning(id: ctx.jobID, "Diarization failed — speakers not identified")
+            addWarning(id: ctx.jobID, String(localized: "Diarization failed — speakers not identified"))
             // Continue with original transcript
         }
 
@@ -599,14 +602,14 @@ extension PipelineQueue {
             logger.warning(
                 "[\(sid, privacy: .public)] mic_diarization_failed error=\(micError?.localizedDescription ?? "unknown", privacy: .public) — falling back to app-only diarization",
             )
-            addWarning(id: jobID, "Mic track diarization failed — speaker labels reflect remote audio only")
+            addWarning(id: jobID, String(localized: "Mic track diarization failed — speaker labels reflect remote audio only"))
             combined = app
 
         case let (nil, mic?):
             logger.warning(
                 "[\(sid, privacy: .public)] app_diarization_failed error=\(appError?.localizedDescription ?? "unknown", privacy: .public) — falling back to mic-only diarization",
             )
-            addWarning(id: jobID, "App track diarization failed — speaker labels reflect local mic only")
+            addWarning(id: jobID, String(localized: "App track diarization failed — speaker labels reflect local mic only"))
             combined = mic
 
         case (nil, nil):
@@ -813,7 +816,7 @@ extension PipelineQueue {
             stopElapsedTimer()
         } catch {
             logger.warning("[\(shortID, privacy: .public)] protocol_generation_failed error=\(error.localizedDescription, privacy: .public)")
-            addWarning(id: jobID, "Protocol generation failed — transcript saved")
+            addWarning(id: jobID, String(localized: "Protocol generation failed — transcript saved"))
             stopElapsedTimer()
         }
     }

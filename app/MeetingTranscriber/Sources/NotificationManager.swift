@@ -135,20 +135,20 @@ final class NotificationManager: NSObject, UNUserNotificationCenterDelegate, App
     ) -> (title: String, body: String)? {
         switch state {
         case .recording:
-            let meetingTitle = status.meeting?.title ?? "Unknown"
+            let meetingTitle = status.meeting?.title ?? String(localized: "Unknown")
             let app = status.meeting?.app ?? ""
-            return ("Meeting Detected", "Recording: \(meetingTitle) (\(app))")
+            return (String(localized: "Meeting Detected"), String(localized: "Recording: \(meetingTitle) (\(app))"))
 
         case .protocolReady:
-            let meetingTitle = status.meeting?.title ?? "Meeting"
-            return ("Protocol Ready", "Protocol for \"\(meetingTitle)\" is ready.")
+            let meetingTitle = status.meeting?.title ?? String(localized: "Meeting")
+            return (String(localized: "Protocol Ready"), String(localized: "Protocol for \"\(meetingTitle)\" is ready."))
 
         case .waitingForSpeakerNames:
-            return ("Name Speakers", "Speakers detected — open the app to assign names")
+            return (String(localized: "Name Speakers"), String(localized: "Speakers detected — open the app to assign names"))
 
         case .error:
             if let error = status.error {
-                return ("Transcriber Error", error)
+                return (String(localized: "Transcriber Error"), error)
             }
             return nil
 
@@ -178,12 +178,12 @@ final class NotificationManager: NSObject, UNUserNotificationCenterDelegate, App
         // also activates whichever bundle LaunchServices considers canonical
         // for the identifier, which on a machine with several copies installed
         // is not necessarily the one that asked.
-        let record = UNNotificationAction(identifier: recordActionID, title: "Record", options: [])
-        let ignore = UNNotificationAction(identifier: ignoreActionID, title: "Ignore", options: [])
+        let record = UNNotificationAction(identifier: recordActionID, title: String(localized: "Record"), options: [])
+        let ignore = UNNotificationAction(identifier: ignoreActionID, title: String(localized: "Ignore"), options: [])
         // Never is what makes process-open detection tolerable: any app holding
         // a WebRTC assertion can reach this prompt, so the user needs a way to
         // retire one permanently rather than declining it every ten minutes.
-        let never = UNNotificationAction(identifier: neverActionID, title: "Never for this app", options: [])
+        let never = UNNotificationAction(identifier: neverActionID, title: String(localized: "Never for this app"), options: [])
         return UNNotificationCategory(
             identifier: consentCategoryID,
             actions: [record, ignore, never],

@@ -581,7 +581,7 @@ class PipelineQueue {
         } else if newState == .error,
                   !transcriptOutputOptions(forJobID: id).saveRawTranscriptSeparately,
                   jobs[index].transcriptPath != nil {
-            let warning = "Raw transcript retained because the job did not complete"
+            let warning = String(localized: "Raw transcript retained because the job did not complete")
             if !jobs[index].warnings.contains(warning) {
                 jobs[index].warnings.append(warning)
             }
@@ -618,7 +618,7 @@ class PipelineQueue {
         guard !transcriptOutputOptions(forJobID: jobs[index].id).saveRawTranscriptSeparately else { return }
         guard jobs[index].protocolPath != nil else {
             if jobs[index].transcriptPath != nil {
-                let warning = "Raw transcript retained because no protocol was saved"
+                let warning = String(localized: "Raw transcript retained because no protocol was saved")
                 if !jobs[index].warnings.contains(warning) {
                     jobs[index].warnings.append(warning)
                 }
@@ -647,7 +647,7 @@ class PipelineQueue {
                 logger.warning(
                     "Failed to remove transcript according to output setting: \(error.localizedDescription, privacy: .public)",
                 )
-                jobs[index].warnings.append("Raw transcript could not be removed")
+                jobs[index].warnings.append(String(localized: "Raw transcript could not be removed"))
             }
         }
         do {
@@ -656,7 +656,7 @@ class PipelineQueue {
             logger.warning(
                 "Failed to remove transcript segments according to output setting: \(error.localizedDescription, privacy: .public)",
             )
-            let warning = "Raw transcript segments could not be removed"
+            let warning = String(localized: "Raw transcript segments could not be removed")
             if !jobs[index].warnings.contains(warning) {
                 jobs[index].warnings.append(warning)
             }

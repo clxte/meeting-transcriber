@@ -204,25 +204,25 @@ final class PipelineController {
             settings.transcriptWebhookEnabled,
             settings.transcriptWebhookURL,
             settings.transcriptWebhookToken.isEmpty ? nil : settings.transcriptWebhookToken,
-            settings.effectiveOutputDir
+            settings.effectiveOutputDir,
         )
     }
 
     func notifyDeliveryProblem(_ body: String) {
-        notifier.notify(title: "Transcript Delivery Failed", body: body)
+        notifier.notify(title: String(localized: "Transcript Delivery Failed"), body: body)
     }
 
     func configureCallbacks() {
         queue.onJobStateChange = { [notifier, weak self] job, _, newState in
             switch newState {
             case .done:
-                let title = job.protocolPath != nil ? "Protocol Ready" : "Transcript Saved"
+                let title = job.protocolPath != nil ? String(localized: "Protocol Ready") : String(localized: "Transcript Saved")
                 notifier.notify(title: title, body: job.meetingTitle)
                 self?.deliverTranscriptIfConfigured(for: job)
 
             case .error:
                 if let err = job.error {
-                    notifier.notify(title: "Error", body: err)
+                    notifier.notify(title: String(localized: "Error"), body: err)
                 }
 
             default:

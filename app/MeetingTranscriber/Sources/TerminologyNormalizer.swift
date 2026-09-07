@@ -16,11 +16,11 @@ struct TerminologyNormalizer: Sendable {
 
         var message: String {
             if isTooLarge {
-                return "Terminology rules are too large to apply."
+                return String(localized: "Terminology rules are too large to apply.")
             }
-            var result = "\(activeRuleCount) active terminology rule\(activeRuleCount == 1 ? "" : "s")."
+            var result = String(localized: "\(activeRuleCount) active terminology rule\(activeRuleCount == 1 ? "" : "s").")
             if ignoredLineCount > 0 {
-                result += " \(ignoredLineCount) invalid line\(ignoredLineCount == 1 ? " was" : "s were") ignored."
+                result += String(localized: " \(ignoredLineCount) invalid line\(ignoredLineCount == 1 ? " was" : "s were") ignored.")
             }
             return result
         }
