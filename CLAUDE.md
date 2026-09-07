@@ -234,7 +234,8 @@ Use the `/git-workflow` skill. Commit proactively after every logical unit of wo
 **UI:**
 - `MenuBarIcon` renders animated waveform reflecting pipeline state (idle, recording, transcribing, diarizing, protocol).
 - `AppPickerView` enables manual recording of any app via app picker.
-- `UpdateChecker` checks GitHub releases for newer versions, shows badge on menu bar icon.
+- `UpdateChecker` checks GitHub releases (the `clxte` fork) for newer versions, shows badge on menu bar icon.
+- **In-app auto-update (Sparkle, `#if !APPSTORE`):** background checks against the appcast on the fork's latest release + a "Check for Updates..." menu item; `build_release.sh` stamps `CFBundleVersion` with the release version (Sparkle's comparison key) and re-signs the embedded framework for hardened-runtime library validation. Full runbook incl. EdDSA key handling: `docs/auto-update.md`.
 
 **Permission health check:**
 - `PermissionHealthCheck` verifies each TCC permission by combining the system verdict with a live probe. Each resolves to `PermissionStatus` (`.healthy | .denied | .broken | .notDetermined`). `.broken` means TCC says allowed but the probe disagrees — fix is to toggle the permission off and on in System Settings.
