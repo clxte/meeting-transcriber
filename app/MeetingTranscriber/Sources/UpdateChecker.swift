@@ -25,7 +25,7 @@ protocol UpdateProviding: Sendable {
 // MARK: - GitHub Release Provider
 
 struct GitHubReleaseProvider: UpdateProviding {
-    private let owner = "pasrom"
+    private let owner = "clxte"
     private let repo = "meeting-transcriber"
 
     private struct GitHubRelease: Codable {
