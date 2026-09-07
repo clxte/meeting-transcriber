@@ -32,3 +32,7 @@ scripts/fixtures/package-lock.json
 
 # Developer ID provisioning profiles (account artifacts, like the signing cert)
 signing/
+
+# Certificate exports (Developer ID + private key) must never enter git —
+# they pass through as GitHub secrets and live in the keychain.
+*.p12
