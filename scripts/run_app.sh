@@ -96,6 +96,14 @@ if ! install_localvqe_resources "$APP_BUNDLE/Contents/Resources"; then
     echo "  WARNING: LocalVQE model unavailable; echo cancellation will find no model."
 fi
 
+# UI translation tables, same install build_release.sh performs, so the dev
+# app (which scripts/e2e-app.sh deploys) runs with the localizations users
+# get. Fatal here like the licences: the tables are repo files, so a failed
+# copy is a repo bug, not an unreachable download.
+# shellcheck source=lib/localization-resources.sh
+source "$SCRIPT_DIR/lib/localization-resources.sh"
+install_localization_resources "$APP_BUNDLE/Contents/Resources"
+
 # Code-sign so macOS keeps its permission grants across rebuilds.
 # Uses SHA-1 hash to avoid "ambiguous identity" errors with duplicate names.
 #

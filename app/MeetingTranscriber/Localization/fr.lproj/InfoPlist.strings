@@ -1,0 +1,11 @@
+/* French translations of the permission prompts macOS itself displays.
+   The English originals live in Sources/Info.plist; macOS reads this table
+   from the app bundle's fr.lproj when the user's system language is French. */
+
+"NSAudioCaptureUsageDescription" = "Meeting Transcriber enregistre le son émis par l’app de réunion elle-même (les autres participants) via une capture de processus Core Audio.";
+
+"NSMicrophoneUsageDescription" = "Meeting Transcriber a besoin d’accéder au microphone pour enregistrer l’audio des réunions à transcrire.";
+
+"NSScreenCaptureUsageDescription" = "Meeting Transcriber a besoin de l’autorisation Enregistrement de l’écran pour détecter les réunions en cours en lisant les titres des fenêtres.";
+
+"NSAccessibilityUsageDescription" = "Meeting Transcriber utilise l’Accessibilité pour détecter l’état de sourdine et lire la liste des participants à la réunion.";

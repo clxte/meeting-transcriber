@@ -4,6 +4,11 @@ import PackageDescription
 
 let package = Package(
     name: "MeetingTranscriber",
+    // English is the development language: every string literal in code is its
+    // own English rendering, and the French table in the app bundle overrides
+    // it at runtime. Declared here so localization tooling (Xcode's
+    // Export Localizations) can extract the SwiftUI/String(localized:) keys.
+    defaultLocalization: "en",
     platforms: [.macOS(.v14)],
     dependencies: [
         .package(url: "https://github.com/nalexn/ViewInspector", from: "0.10.3"),

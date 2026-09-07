@@ -142,6 +142,15 @@ install_third_party_licenses "$RESOURCES"
 source "$SCRIPT_DIR/lib/localvqe-resources.sh"
 install_localvqe_resources "$RESOURCES"
 
+# UI translation tables (French, with English as the in-code fallback). The
+# tables must sit in the app bundle's Resources — not in an SPM resource
+# bundle — for SwiftUI's default Bundle.main lookup to see them; the reasoning
+# lives in lib/localization-resources.sh. Fatal on failure: the tables are
+# repo files, so a failed install is a repo bug.
+# shellcheck source=lib/localization-resources.sh
+source "$SCRIPT_DIR/lib/localization-resources.sh"
+install_localization_resources "$RESOURCES"
+
 # Inject git commit hash
 GIT_HASH=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
 /usr/libexec/PlistBuddy -c "Add :GitCommitHash string $GIT_HASH" "$CONTENTS/Info.plist" 2>/dev/null || \
