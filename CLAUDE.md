@@ -20,6 +20,7 @@ app/MeetingTranscriber/    # Swift macOS menu-bar app (SPM)
                            #   DebugRPCServer + /v1 automation API (#if !APPSTORE).
   Tests/                   # XCTest + ViewInspector; Fixtures/ test audio (two_speakers_de.wav, ...)
   Entitlements/            # Homebrew.entitlements (mic only) + AppStore.entitlements (sandbox)
+  Localization/            # fr.lproj UI translations (installed into the bundle at assembly)
   Info.plist               # Bundle metadata
 tools/audiotap/            # AudioTapLib: CATapDescription app-audio + AVAudioEngine mic capture (SPM lib)
 tools/meeting-simulator/   # Meeting simulator for testing
@@ -115,8 +116,8 @@ Use the `/git-workflow` skill. Commit proactively after every logical unit of wo
 
 ## Conventions
 
-- All code and UI text in English
-- Protocol output language configurable via `AppSettings.protocolLanguage` (default: German)
+- All code and UI text in English — the English literal doubles as the localization key. The UI renders in French when macOS is set to French (see the Localization note under Architecture Notes); there is no in-app language setting.
+- Protocol output language configurable via `AppSettings.protocolLanguage` (default: German) — independent of the UI language
 - **Plan files:**
   - `docs/plans/` (committed) — RFCs and reference docs for future features that should be visible to anyone reading the repo
   - `docs/plans/.local/` (gitignored) — personal scratch; optional subfolders `open/`, `research/`, `done/`, `future/`, `deferred/`
@@ -222,6 +223,13 @@ Use the `/git-workflow` skill. Commit proactively after every logical unit of wo
 - **The wire shape has a fixed eight keys**, with a hand-written `encode(to:)` so nullable fields emit an explicit `null`. The synthesised encoder's `encodeIfPresent` would make the key set depend on whether the job had a real meeting start, so a recorded meeting and an import would arrive at the user's endpoint with different shapes. `TranscriptDeliveryPolicyTests.testWireFieldNamesAreStable` exists to make a rename fail loudly, since the receiving server is one we cannot see.
 - **`startedAt` is the field a consumer joins on, and it is null rather than approximated.** Imports and crash-recovered jobs have no real meeting start; sending `enqueuedAt` in its place would let a consumer join an import against a calendar entry days from the actual meeting. What the app knows about *who* a meeting was with is weak by nature — `meetingTitle` is often a room code and needs the Screen Recording grant to be real at all, `appName` names the channel, `participants` is Teams-only via the Accessibility grant and usually empty — so resolving the counterparty is a calendar join in the consumer, not something the app should pretend to answer.
 - Retries cover `429`/`5xx`/transport only. Another `4xx` is a bad token or a moved endpoint, which will not fix itself, so retrying it only delays telling the user. `Idempotency-Key` carries the job ID so a retry whose response was lost is not booked as a second meeting.
+
+**Localization (French UI, system-decided):**
+- English literals in code are the localization keys. `app/MeetingTranscriber/Localization/fr.lproj/` (Localizable.strings + Localizable.stringsdict + InfoPlist.strings) is installed into `Contents/Resources` by `scripts/lib/localization-resources.sh`, sourced by both `build_release.sh` and `run_app.sh`. **The tables live in the main bundle, deliberately not in an SPM resource bundle**: SwiftUI's `LocalizedStringKey` and `String(localized:)` resolve against `Bundle.main`, so every existing `Text("literal")` localizes untouched — and `swift build`/`swift test` never see the tables, so test output stays byte-identical English on a French machine. `CFBundleDevelopmentRegion=en` + a missing key both fall back to the English literal, never a placeholder.
+- Three code shapes, by site: a plain literal (SwiftUI call or `String(localized:)`) is compiler-extractable; an interpolated literal becomes one `String(localized:)` format key (`%@`/`%lld`; **never interpolate a Double directly** — it renders as `%lf` ("3.140000") and changes English output, pre-render it to a String first; a literal `%` becomes `%%` in the key); long texts assembled from concatenated literals keep their shape and go through `Localized.lookup(...)`, whose key is the full assembled English sentence (the 160-column lint limit is why they stay concatenated — interpolated lines are exempt from it, non-interpolated ones are not).
+- Plurals: `fr.lproj/Localizable.stringsdict` carries the genuinely variable counts, because CLDR French treats 0 as singular, which no English suffix argument can express. The `"…%@"` suffix-argument keys (`%lld paired recording%@`) translate in `.strings` by reusing the s-argument positionally (`%2$@` on each agreeing word).
+- Adding a string: write the English literal as usual; `./scripts/extract-localizable-keys.sh --missing` lists the keys the French table doesn't cover (fallback is English, so a gap is a to-do, not a bug). `LocalizationTableTests` pins the runtime-assembled keys to the table, checks key/value format-specifier agreement, the stringsdict structure, and that `InfoPlist.strings` covers exactly the four TCC usage descriptions macOS renders itself.
+- **Not localized, on purpose:** the `"Me"`/`"Remote"` speaker labels (written into transcript files and compared as routing values), `AppSettings.protocolLanguages` values and `RecognitionAction.rawValue` (persisted/wire values — display-only maps localize the rendering), log/RPC/JSON strings, protocol prompt and other file content, proper nouns and the language-picker endonyms.
 
 **UI:**
 - `MenuBarIcon` renders animated waveform reflecting pipeline state (idle, recording, transcribing, diarizing, protocol).
