@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<!-- French plural rules for count-carrying keys. French treats 0 as singular
+     ("0 locuteur"), which no suffix argument or ternary in the English code
+     can express, so these keys resolve here instead of Localizable.strings.
+     English ships no stringsdict: the code's own wording stays authoritative.
+     CLDR French: "one" covers 0 and 1, "other" covers the rest. -->
+<dict>
+    <key>%lld speakers</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@count@</string>
+        <key>count</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>lld</string>
+            <key>one</key>
+            <string>%lld locuteur</string>
+            <key>other</key>
+            <string>%lld locuteurs</string>
+        </dict>
+    </dict>
+    <key>Found %lld speakers in %@</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%1$#@speakers@</string>
+        <key>speakers</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>lld</string>
+            <key>one</key>
+            <string>%1$lld locuteur trouvé dans %2$@</string>
+            <key>other</key>
+            <string>%1$lld locuteurs trouvés dans %2$@</string>
+        </dict>
+    </dict>
+    <key>Connected (%lld models)</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@models@</string>
+        <key>models</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>lld</string>
+            <key>one</key>
+            <string>Connecté (%lld modèle)</string>
+            <key>other</key>
+            <string>Connecté (%lld modèles)</string>
+        </dict>
+    </dict>
+    <!-- The English key's %@ receives " was" / "s were", which French cannot
+         reuse; the French rendering is driven by the count alone and the
+         second argument goes deliberately unused. -->
+    <key> %lld invalid line%@ ignored.</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%1$#@lines@</string>
+        <key>lines</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>lld</string>
+            <key>one</key>
+            <string> %1$lld ligne invalide ignorée.</string>
+            <key>other</key>
+            <string> %1$lld lignes invalides ignorées.</string>
+        </dict>
+    </dict>
+</dict>
+</plist>

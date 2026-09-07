@@ -1,0 +1,463 @@
+/* French UI translations.
+   The key is the English text exactly as it appears in code — a SwiftUI
+   literal, a String(localized:) literal (interpolations appear as format
+   specifiers: %@, %lld, and a literal % as %%), or the full sentence a
+   Localized.lookup(...) site assembles. A key missing from this table falls
+   back to English; scripts/extract-localizable-keys.sh --missing lists the
+   compiler-extractable gaps, and LocalizationTableTests pins the assembled
+   ones. Plural-sensitive keys live in Localizable.stringsdict instead. */
+
+/* ── Menu bar & status ────────────────────────────────────────────────── */
+
+"Idle" = "Inactif";
+"Watching for Meetings..." = "Surveillance des réunions…";
+"Recording" = "Enregistrement";
+"Transcribing..." = "Transcription…";
+"Transcribing (Native)..." = "Transcription (native)…";
+"Generating Protocol..." = "Génération du compte rendu…";
+"Speaker Count" = "Nombre de locuteurs";
+"Name Speakers" = "Nommer les locuteurs";
+"Protocol Ready" = "Compte rendu prêt";
+"Error" = "Erreur";
+"Waiting..." = "En attente…";
+"Diarizing..." = "Diarisation…";
+"Name Speakers..." = "Nommer les locuteurs…";
+"Done" = "Terminé";
+"Start Watching" = "Démarrer la surveillance";
+"Stop Watching" = "Arrêter la surveillance";
+"Start Recording" = "Démarrer l'enregistrement";
+"Stop Recording" = "Arrêter l'enregistrement";
+"Record Microphone" = "Enregistrer le microphone";
+"Record App" = "Enregistrer une app";
+"Record App..." = "Enregistrer une app…";
+"Process Audio/Video Files..." = "Traiter des fichiers audio/vidéo…";
+"Open Last Protocol" = "Ouvrir le dernier compte rendu";
+"Open Protocols Folder" = "Ouvrir le dossier des comptes rendus";
+"Browse Past Recordings…" = "Parcourir les enregistrements passés…";
+"Update Available: %@" = "Mise à jour disponible : %@";
+"Update available: %@" = "Mise à jour disponible : %@";
+"Settings" = "Réglages";
+"Settings..." = "Réglages…";
+"Quit" = "Quitter";
+"Open" = "Ouvrir";
+" · longer than usual (Ø %@)" = " · plus long que d'habitude (moy. %@)";
+" · Ø %@" = " · moy. %@";
+"Ø %@" = "moy. %@";
+"Polling for meetings..." = "Recherche de réunions…";
+"Recording: %@" = "Enregistrement : %@";
+"Recording: %@ (%@)" = "Enregistrement : %@ (%@)";
+"Recording error: %@" = "Erreur d'enregistrement : %@";
+"Record-only output failed" = "Échec de la sortie en mode enregistrement seul";
+"Record-only output failed: %@" = "Échec de la sortie en mode enregistrement seul : %@";
+"Record the system microphone, with no app audio" = "Enregistrer le microphone du système, sans l'audio des apps";
+"Meeting title (optional)" = "Titre de la réunion (facultatif)";
+"Another recording is already starting or under way. The menu bar shows it once it is running." = "Un autre enregistrement démarre ou est déjà en cours. La barre des menus l'affiche une fois lancé.";
+"Re-transcribe" = "Re-transcription";
+
+/* ── Notifications ────────────────────────────────────────────────────── */
+
+"Meeting Detected" = "Réunion détectée";
+"Protocol for \"%@\" is ready." = "Le compte rendu de « %@ » est prêt.";
+"Speakers detected — open the app to assign names" = "Locuteurs détectés — ouvrez l'app pour leur attribuer des noms";
+"Transcriber Error" = "Erreur de transcription";
+"Unknown" = "Inconnu";
+"Meeting" = "Réunion";
+"Record" = "Enregistrer";
+"Ignore" = "Ignorer";
+"Never for this app" = "Jamais pour cette app";
+"Record browser meeting?" = "Enregistrer la réunion du navigateur ?";
+"A meeting is active in %@." = "Une réunion est en cours dans %@.";
+"Microphone Recording Refused" = "Enregistrement du microphone refusé";
+"Recording Refused" = "Enregistrement refusé";
+"A meeting is already being recorded" = "Une réunion est déjà en cours d'enregistrement";
+"Manual Recording" = "Enregistrement manuel";
+"Transcript Saved" = "Transcription enregistrée";
+"Transcript Delivery Failed" = "Échec de l'envoi de la transcription";
+"Transcript endpoint must use https" = "Le point de terminaison de transcription doit utiliser https";
+"Transcript endpoint is not a valid URL" = "Le point de terminaison de transcription n'est pas une URL valide";
+"Could not send \"%@\" to your server" = "Impossible d'envoyer « %@ » à votre serveur";
+
+/* ── Channel health (keys are the full assembled English sentences) ───── */
+
+"Recording Appears Silent" = "L'enregistrement semble silencieux";
+"Capture Channel Lost" = "Canal de capture perdu";
+"Capture Channel Silent" = "Canal de capture silencieux";
+"App-audio" = "Audio de l'app";
+"%@ capture could not recover after an audio device change and has stopped for this recording. The rest of the recording continues. Restart Meeting Transcriber to bring the channel back, and to release the extra CPU a stuck restart attempt may still be holding." = "La capture du canal « %@ » n'a pas pu se rétablir après un changement de périphérique audio et s'est arrêtée pour cet enregistrement. Le reste de l'enregistrement continue. Redémarrez Meeting Transcriber pour récupérer ce canal et libérer le CPU qu'une tentative de redémarrage bloquée peut encore retenir.";
+"The app-audio channel stopped delivering audio to this recording. Switch the system output device to another one and back: that rebuilds the tap on the meeting app, which has died." = "Le canal audio de l'app a cessé de fournir de l'audio à cet enregistrement. Basculez le périphérique de sortie du système vers un autre puis revenez : cela reconstruit la capture sur l'app de réunion, qui s'est arrêtée.";
+"The app-audio channel carried audio earlier in this recording and now delivers only silence. Switch the system output device to another one and back: that rebuilds the tap. This is not a permission problem, because a tap that is not allowed to hear the app never delivers audio at all. If the silence persists, the meeting app has moved its output to a path the tap does not follow." = "Le canal audio de l'app a transporté de l'audio plus tôt dans cet enregistrement et ne fournit plus que du silence. Basculez le périphérique de sortie du système vers un autre puis revenez : cela reconstruit la capture. Ce n'est pas un problème d'autorisation : une capture qui n'a pas le droit d'entendre l'app ne fournit jamais aucun audio. Si le silence persiste, l'app de réunion a déplacé sa sortie vers un chemin que la capture ne suit pas.";
+"The app-audio channel has delivered only silence since this recording started, while the microphone carries audio. Check that Meeting Transcriber is enabled under %@, and whether a third-party audio tool (SoundSource, Audio Hijack, Loopback, Krisp) is intercepting the meeting app's audio." = "Le canal audio de l'app ne fournit que du silence depuis le début de cet enregistrement, alors que le microphone transporte de l'audio. Vérifiez que Meeting Transcriber est activé dans %@, et qu'aucun outil audio tiers (SoundSource, Audio Hijack, Loopback, Krisp) n'intercepte l'audio de l'app de réunion.";
+"The microphone stopped delivering audio to this recording. Check that the input device is still connected, and that Meeting Transcriber still has permission to use the microphone." = "Le microphone a cessé de fournir de l'audio à cet enregistrement. Vérifiez que le périphérique d'entrée est toujours connecté et que Meeting Transcriber a toujours l'autorisation d'utiliser le microphone.";
+"The microphone is delivering silence, not quiet audio. Check the mute switch on your headset or input device, and the input mute in macOS. A meeting app's own mute button does not cause this." = "Le microphone fournit du silence numérique, pas un son faible. Vérifiez le bouton sourdine de votre casque ou de votre périphérique d'entrée, ainsi que la sourdine d'entrée de macOS. Le bouton sourdine de l'app de réunion elle-même ne provoque pas cela.";
+"The microphone has been silent since the recording started. Check that the right input device is selected and that it is not muted." = "Le microphone est silencieux depuis le début de l'enregistrement. Vérifiez que le bon périphérique d'entrée est sélectionné et qu'il n'est pas en sourdine.";
+"The app-audio channel has been silent since the recording started. Check that the meeting app is actually playing audio, and whether a third-party audio tool (SoundSource, Audio Hijack, Loopback, Krisp) is intercepting it." = "Le canal audio de l'app est silencieux depuis le début de l'enregistrement. Vérifiez que l'app de réunion émet réellement du son, et qu'aucun outil audio tiers (SoundSource, Audio Hijack, Loopback, Krisp) ne l'intercepte.";
+"Both capture channels have been silent since the recording started. Check the audio routing — the meeting app may have claimed the mic in exclusive mode (e.g. AirPods HFP), or the system input device may be muted." = "Les deux canaux de capture sont silencieux depuis le début de l'enregistrement. Vérifiez le routage audio — l'app de réunion a peut-être pris le micro en mode exclusif (AirPods HFP, par exemple), ou le périphérique d'entrée du système est en sourdine.";
+
+/* ── Permissions ──────────────────────────────────────────────────────── */
+
+"Permission Problem" = "Problème d'autorisation";
+"Screen Recording" = "Enregistrement de l'écran";
+"Screen & System Audio Recording" = "Enregistrement de l'écran et de l'audio du système";
+"Accessibility" = "Accessibilité";
+"System Settings → Privacy & Security → %@" = "Réglages Système → Confidentialité et sécurité → %@";
+"%@ looks enabled but isn't working — toggle it off and on in System Settings" = "%@ semble activé mais ne fonctionne pas — désactivez puis réactivez l'autorisation dans les Réglages Système";
+"%@ permission denied" = "Autorisation « %@ » refusée";
+"A recording is already running" = "Un enregistrement est déjà en cours";
+"Turn off \"No Microphone\" in Settings to record the microphone" = "Désactivez « Sans microphone » dans les Réglages pour enregistrer le microphone";
+
+/* ── Errors ───────────────────────────────────────────────────────────── */
+
+"Failed to create audio buffer" = "Échec de la création du tampon audio";
+"Audio buffer has no float data" = "Le tampon audio ne contient pas de données float";
+"Failed to create audio format" = "Échec de la création du format audio";
+"File contains no audio track" = "Le fichier ne contient aucune piste audio";
+"Audio extraction failed: %@" = "Échec de l'extraction audio : %@";
+"ffmpeg not found. Install: brew install ffmpeg" = "ffmpeg introuvable. Installation : brew install ffmpeg";
+"ffmpeg failed: %@" = "Échec de ffmpeg : %@";
+"Not currently recording" = "Aucun enregistrement en cours";
+"No audio data recorded" = "Aucune donnée audio enregistrée";
+"macOS 14.2+ required for audio capture" = "macOS 14.2 ou ultérieur requis pour la capture audio";
+"Permission problem: %@" = "Problème d'autorisation : %@";
+"WhisperKit model not loaded" = "Modèle WhisperKit non chargé";
+"Network error: %@" = "Erreur réseau : %@";
+"Connection failed: %@" = "Échec de la connexion : %@";
+"Invalid endpoint URL" = "URL du point de terminaison invalide";
+"Failed to fetch models" = "Impossible de récupérer les modèles";
+"Single-source job missing mixPath" = "Tâche mono-source sans mixPath";
+"This recording is already being processed" = "Cet enregistrement est déjà en cours de traitement";
+"Empty transcript" = "Transcription vide";
+
+/* ── Job warnings ─────────────────────────────────────────────────────── */
+
+"Raw transcript retained because the job did not complete" = "Transcription brute conservée car la tâche ne s'est pas terminée";
+"Raw transcript retained because no protocol was saved" = "Transcription brute conservée car aucun compte rendu n'a été enregistré";
+"Raw transcript could not be removed" = "La transcription brute n'a pas pu être supprimée";
+"Raw transcript segments could not be removed" = "Les segments de la transcription brute n'ont pas pu être supprimés";
+"Speaker diarization needs per-utterance timestamps, which the selected transcription engine doesn't produce — speakers not labeled" = "La diarisation des locuteurs nécessite des horodatages par énoncé, que le moteur de transcription sélectionné ne produit pas — locuteurs non étiquetés";
+"Diarization failed — speakers not identified" = "Échec de la diarisation — locuteurs non identifiés";
+"Mic track diarization failed — speaker labels reflect remote audio only" = "Échec de la diarisation de la piste micro — les étiquettes de locuteurs ne reflètent que l'audio distant";
+"App track diarization failed — speaker labels reflect local mic only" = "Échec de la diarisation de la piste app — les étiquettes de locuteurs ne reflètent que le micro local";
+"Protocol generation failed — transcript saved" = "Échec de la génération du compte rendu — transcription enregistrée";
+"Echo cancellation is on but its model is missing, so the microphone track was left as recorded." = "L'annulation d'écho est activée mais son modèle est introuvable ; la piste micro a été laissée telle qu'enregistrée.";
+"Echo cancellation failed, so the microphone track was left as recorded." = "L'annulation d'écho a échoué ; la piste micro a été laissée telle qu'enregistrée.";
+"Echo cancellation finished but its result could not be used, so the microphone track was left as recorded." = "L'annulation d'écho s'est terminée mais son résultat n'a pas pu être utilisé ; la piste micro a été laissée telle qu'enregistrée.";
+"Echo cancellation ran but removed almost nothing, so the microphone track was left as recorded." = "L'annulation d'écho s'est exécutée mais n'a presque rien retiré ; la piste micro a été laissée telle qu'enregistrée.";
+"Echo cancellation altered parts of the recording where there was no echo, so the microphone track was left as recorded." = "L'annulation d'écho a altéré des passages sans écho ; la piste micro a été laissée telle qu'enregistrée.";
+"Echo cancellation could not be confirmed on this recording, so the microphone track was left as recorded." = "L'annulation d'écho n'a pas pu être confirmée sur cet enregistrement ; la piste micro a été laissée telle qu'enregistrée.";
+"Protocol not generated — transcript file is missing" = "Compte rendu non généré — fichier de transcription introuvable";
+"Late re-confirm unavailable — naming data could not be persisted" = "Reconfirmation tardive indisponible — les données de nommage n'ont pas pu être sauvegardées";
+"This recording has no saved transcript segments, so the re-run's speaker changes could not be applied to the transcript" = "Cet enregistrement n'a pas de segments de transcription sauvegardés ; les changements de locuteurs de la relance n'ont pas pu être appliqués à la transcription";
+"Speaker output was picked up by the microphone in %lld%% of the %lld %@ analysed." = "Le son des haut-parleurs a été capté par le microphone dans %lld %% des %lld %@ analysées.";
+"It was removed from the microphone track before transcription. Headphones still give the cleaner recording." = "Il a été retiré de la piste micro avant la transcription. Un casque donne toutefois un enregistrement plus propre.";
+"Remote speech may appear twice in the transcript. Using headphones avoids it." = "Les paroles distantes peuvent apparaître deux fois dans la transcription. L'usage d'un casque évite cela.";
+"Voices from this recording are not added to the speaker database." = "Les voix de cet enregistrement ne sont pas ajoutées à la base de locuteurs.";
+
+/* ── Speaker naming & known voices ────────────────────────────────────── */
+
+"Name Speakers — \"%@\"" = "Nommer les locuteurs — « %@ »";
+"Name" = "Nom";
+"Auto: %@" = "Auto : %@";
+"Known:" = "Connus :";
+"More (%lld)…" = "Plus (%lld)…";
+"Less" = "Moins";
+"Skip" = "Passer";
+"Confirm" = "Confirmer";
+"Re-run" = "Relancer";
+"Wrong count?" = "Mauvais nombre ?";
+"Offline" = "Hors ligne";
+"Known Voices" = "Voix connues";
+"Rename speaker" = "Renommer le locuteur";
+"Rename" = "Renommer";
+"Delete speaker?" = "Supprimer le locuteur ?";
+"Delete" = "Supprimer";
+"Cancel" = "Annuler";
+"Save" = "Enregistrer";
+"Close" = "Fermer";
+"Merge" = "Fusionner";
+"Merge %@ into…" = "Fusionner %@ dans…";
+"Merge into…" = "Fusionner dans…";
+"(choose)" = "(choisir)";
+"%@ will be removed. This cannot be undone." = "%@ sera supprimé. Cette action est irréversible.";
+"If a speaker with the new name already exists, the two will be merged." = "Si un locuteur portant le nouveau nom existe déjà, les deux seront fusionnés.";
+"Embeddings, centroid, last-used and use count of both speakers will be combined; %@ is removed." = "Les embeddings, le centroïde, la dernière utilisation et le nombre d'utilisations des deux locuteurs seront combinés ; %@ est supprimé.";
+"Rename, delete, or merge entries in your speaker DB." = "Renommez, supprimez ou fusionnez les entrées de votre base de locuteurs.";
+"Pipeline busy — diarization may be slower." = "Pipeline occupé — la diarisation peut être plus lente.";
+"Add from Recording…" = "Ajouter depuis un enregistrement…";
+"Add Voice from Recording" = "Ajouter une voix depuis un enregistrement";
+"Finish the open naming dialog before enrolling new voices." = "Terminez le dialogue de nommage en cours avant d'inscrire de nouvelles voix.";
+"Diarize an existing audio file and seed speaker DB entries." = "Diariser un fichier audio existant et amorcer des entrées dans la base de locuteurs.";
+"Seeded via debug RPC with a random embedding. Excluded from auto-naming. Delete to remove." = "Créé via le RPC de débogage avec un embedding aléatoire. Exclu du nommage automatique. Supprimez-le pour le retirer.";
+"Last used" = "Dernière utilisation";
+"Samples" = "Échantillons";
+"Uses" = "Utilisations";
+"synthetic" = "synthétique";
+"Filter…" = "Filtrer…";
+"Me" = "Moi";
+
+/* ── Voice enrollment ─────────────────────────────────────────────────── */
+
+"Pick an audio file with the speaker(s) you want to enroll." = "Choisissez un fichier audio contenant le ou les locuteurs à inscrire.";
+"Diarizing %@…" = "Diarisation de %@…";
+"%.0f s elapsed" = "%.0f s écoulées";
+"No speakers detected in this recording." = "Aucun locuteur détecté dans cet enregistrement.";
+"Diarization produced no embeddings; cannot enroll." = "La diarisation n'a produit aucun embedding ; inscription impossible.";
+"Enrollment failed" = "Échec de l'inscription de la voix";
+"Try Again" = "Réessayer";
+"Select Audio or Video Files" = "Sélectionner des fichiers audio ou vidéo";
+
+/* ── Settings ─────────────────────────────────────────────────────────── */
+
+"General" = "Général";
+"Audio" = "Audio";
+"Transcription" = "Transcription";
+"Speakers" = "Locuteurs";
+"Output" = "Sortie";
+"Advanced" = "Avancé";
+"About" = "À propos";
+"Detection" = "Détection";
+"Apps to Watch" = "Apps à surveiller";
+"Browser Web Meetings" = "Réunions web dans le navigateur";
+"Never record these apps" = "Ne jamais enregistrer ces apps";
+"Detects web meetings (Google Meet, Whereby, web Zoom/Teams) by the WebRTC signal, so any browser works. Other apps that place calls can trigger it too; it always asks before recording, and \"Never for this app\" stops one for good." = "Détecte les réunions web (Google Meet, Whereby, Zoom/Teams web) via le signal WebRTC, donc tout navigateur fonctionne. D'autres apps qui passent des appels peuvent aussi le déclencher ; l'app demande toujours avant d'enregistrer, et « Jamais pour cette app » en retire une définitivement.";
+"Poll Interval" = "Intervalle de sondage";
+"Grace Period" = "Délai de grâce";
+"seconds" = "secondes";
+"%llds" = "%lld s";
+"Updates" = "Mises à jour";
+"Check for Updates" = "Rechercher les mises à jour";
+"Check Now" = "Vérifier maintenant";
+"Include Pre-Releases" = "Inclure les préversions";
+"Up to date" = "À jour";
+"Download %@" = "Télécharger %@";
+"Dismiss" = "Ignorer";
+"Record-only mode" = "Mode enregistrement seul";
+"Record-only mode is active." = "Le mode enregistrement seul est actif.";
+"Output Folder" = "Dossier de sortie";
+"Choose…" = "Choisir…";
+"Choose File…" = "Choisir un fichier…";
+"No Microphone (app audio only)" = "Sans microphone (audio des apps uniquement)";
+"Mic Speaker Name" = "Nom du locuteur micro";
+"Your name for dual-source mode. Leave empty to diarize mic track (multi-person room)." = "Votre nom pour le mode double source. Laissez vide pour diariser la piste micro (salle avec plusieurs personnes).";
+"System Default" = "Par défaut du système";
+"Per-Channel Indicator" = "Indicateur par canal";
+"Warn after:" = "Avertir après :";
+"Voice Activity Detection" = "Détection d'activité vocale";
+"Threshold:" = "Seuil :";
+"Engine" = "Moteur";
+"Language" = "Langue";
+"Auto-detect" = "Détection automatique";
+"Model" = "Modèle";
+"Load Model" = "Charger le modèle";
+"Loading model..." = "Chargement du modèle…";
+"Model ready" = "Modèle prêt";
+"Downloading model... %lld%%" = "Téléchargement du modèle… %lld %%";
+"Download caption model?" = "Télécharger le modèle de sous-titres ?";
+"Enable" = "Activer";
+"Live transcription (PoC)" = "Transcription en direct (PoC)";
+"Show partial transcripts during recording" = "Afficher les transcriptions partielles pendant l'enregistrement";
+"Custom vocabulary file" = "Fichier de vocabulaire personnalisé";
+"Use custom vocabulary prompt (experimental)" = "Utiliser le prompt de vocabulaire personnalisé (expérimental)";
+"Experimental: dense audio can omit whole sentences. See help for measured results; prefer Parakeet for vocabulary boosting." = "Expérimental : un audio dense peut omettre des phrases entières. Voir l'aide pour les résultats mesurés ; préférez Parakeet pour le renforcement du vocabulaire.";
+"When enabled, WhisperKit uses a 32-token hint; earlier terms have priority." = "Si activé, WhisperKit utilise un indice de 32 jetons ; les premiers termes sont prioritaires.";
+"Canonical terminology" = "Terminologie canonique";
+"Speaker Diarization" = "Diarisation des locuteurs";
+"Speaker Identity" = "Identité des locuteurs";
+"Diarizer" = "Diariseur";
+"Diarization" = "Diarisation";
+"Mode" = "Mode";
+"Offline (Clustering)" = "Hors ligne (clustering)";
+"Sortformer (Overlap-aware)" = "Sortformer (gestion des chevauchements)";
+"Expected Speakers" = "Locuteurs attendus";
+"Auto" = "Auto";
+"Auto detects the count; a fixed value forces exactly that many speakers (and over-splits a smaller meeting)." = "Auto détecte le nombre ; une valeur fixe force exactement ce nombre de locuteurs (et sur-segmente une réunion plus petite).";
+"Sortformer caps at %lld speakers — switch to Offline for larger meetings." = "Sortformer plafonne à %lld locuteurs — passez en mode Hors ligne pour les réunions plus grandes.";
+"Sortformer supports up to %lld speakers per meeting. Switch to Offline mode for meetings with more participants." = "Sortformer prend en charge jusqu'à %lld locuteurs par réunion. Passez en mode Hors ligne pour les réunions plus nombreuses.";
+"Exclude overlap" = "Exclure les chevauchements";
+"Experimental: Diarization Tuning" = "Expérimental : réglage de la diarisation";
+"Changing these values may degrade diarization quality. Use with caution and reset if unsure." = "Modifier ces valeurs peut dégrader la qualité de la diarisation. À utiliser avec prudence ; réinitialisez en cas de doute.";
+"Non-default tuning active" = "Réglage non standard actif";
+"Reset to defaults" = "Rétablir les valeurs par défaut";
+"Reset to Default" = "Rétablir la valeur par défaut";
+"Reset" = "Réinitialiser";
+"LLM Provider" = "Fournisseur LLM";
+"OpenAI-Compatible API" = "API compatible OpenAI";
+"None (Transcript Only)" = "Aucun (transcription seule)";
+"Protocol Generation" = "Génération du compte rendu";
+"Protocol Language" = "Langue du compte rendu";
+"Binary used for protocol generation" = "Binaire utilisé pour la génération du compte rendu";
+"Endpoint" = "Point de terminaison";
+"API Key" = "Clé d'API";
+"Bearer Token" = "Jeton Bearer";
+"Leave empty if your local server doesn't require authentication" = "Laissez vide si votre serveur local n'exige pas d'authentification";
+"Base URL (e.g. http://localhost:1234/v1) or full chat-completions URL — both work." = "URL de base (p. ex. http://localhost:1234/v1) ou URL chat-completions complète — les deux fonctionnent.";
+"Fetch Models" = "Récupérer les modèles";
+"Refresh Models" = "Actualiser les modèles";
+"Connected" = "Connecté";
+"No LLM summarization will be generated. Raw transcripts are retained if no protocol is saved." = "Aucune synthèse LLM ne sera générée. Les transcriptions brutes sont conservées si aucun compte rendu n'est enregistré.";
+"Edit Prompt" = "Modifier le prompt";
+"Import Prompt" = "Importer un prompt";
+"Custom prompt active" = "Prompt personnalisé actif";
+"Using default prompt" = "Prompt par défaut utilisé";
+"Reset protocol prompt to the built-in default?" = "Réinitialiser le prompt du compte rendu à sa valeur par défaut ?";
+"Select a prompt file to import" = "Sélectionnez un fichier de prompt à importer";
+"Choose a folder for protocol output" = "Choisissez un dossier de sortie pour les comptes rendus";
+"Include full transcript in protocol" = "Inclure la transcription complète dans le compte rendu";
+"Save raw transcript separately" = "Enregistrer la transcription brute séparément";
+"Transcript Delivery" = "Livraison de la transcription";
+"Send transcript to a server" = "Envoyer la transcription à un serveur";
+"Delivery Endpoint" = "Point de terminaison de livraison";
+"POST as JSON once a meeting finishes processing. Must be https, unless it is localhost." = "POST en JSON une fois le traitement d'une réunion terminé. Doit être en https, sauf pour localhost.";
+"Sent as an Authorization header. Leave empty for a local endpoint that needs no auth." = "Envoyé dans un en-tête Authorization. Laissez vide pour un point de terminaison local sans authentification.";
+"Permissions" = "Autorisations";
+"Available" = "Disponible";
+"Not installed" = "Non installé";
+"Version" = "Version";
+"Build Date" = "Date de build";
+"Identifier" = "Identifiant";
+"unknown" = "inconnu";
+"Local Automation API" = "API d'automatisation locale";
+"Diagnostics" = "Diagnostics";
+"Verbose Diagnostic Logging" = "Journalisation de diagnostic détaillée";
+"Open Diagnostic Logs Folder" = "Ouvrir le dossier des journaux de diagnostic";
+"Open Log Folder" = "Ouvrir le dossier des journaux";
+"Export Diagnostics…" = "Exporter les diagnostics…";
+"Exported to: %@" = "Exporté vers : %@";
+"Export failed: %@" = "Échec de l'export : %@";
+"Open Notification Settings" = "Ouvrir les réglages de notifications";
+"Open System Settings" = "Ouvrir les Réglages Système";
+"Manage…" = "Gérer…";
+"Echo" = "Écho";
+"Help" = "Aide";
+"Shows an explanation of this setting" = "Affiche une explication de ce réglage";
+
+/* ── Stats windows ────────────────────────────────────────────────────── */
+
+"Processing" = "Traitement";
+"Processing Stats" = "Statistiques de traitement";
+"Recognition Stats" = "Statistiques de reconnaissance";
+"Last %lld days" = "%lld derniers jours";
+"Window" = "Fenêtre";
+"Total confirmations" = "Confirmations totales";
+"Accepted" = "Acceptés";
+"Corrected" = "Corrigés";
+"Added" = "Ajoutés";
+"Skipped" = "Passés";
+"Dismissed" = "Ignorés";
+"No data yet — confirm a meeting to start collecting." = "Aucune donnée pour l'instant — confirmez une réunion pour commencer la collecte.";
+"No data yet — process a meeting to start collecting." = "Aucune donnée pour l'instant — traitez une réunion pour commencer la collecte.";
+"No speaker data available." = "Aucune donnée de locuteur disponible.";
+"Transcribing" = "Transcription";
+"Diarizing" = "Diarisation";
+"Protocol" = "Compte rendu";
+"Refresh" = "Actualiser";
+"Reload" = "Recharger";
+"Remove" = "Retirer";
+"(%lld%%)" = "(%lld %%)";
+
+/* ── Settings: vocabulary & terminology ───────────────────────────────── */
+
+"No vocabulary file selected." = "Aucun fichier de vocabulaire sélectionné.";
+"Vocabulary file contains no terms." = "Le fichier de vocabulaire ne contient aucun terme.";
+"Vocabulary file cannot be read." = "Le fichier de vocabulaire ne peut pas être lu.";
+"Vocabulary file is too large." = "Le fichier de vocabulaire est trop volumineux.";
+"Vocabulary file contains too many terms." = "Le fichier de vocabulaire contient trop de termes.";
+"Vocabulary file contains a term that is too long." = "Le fichier de vocabulaire contient un terme trop long.";
+"Vocabulary file can be read: %lld unique term%@." = "Fichier de vocabulaire lisible : %1$lld terme%2$@ unique%2$@.";
+"Terminology rules are too large to apply." = "Les règles de terminologie sont trop volumineuses pour être appliquées.";
+"%lld active terminology rule%@." = "%1$lld règle%2$@ de terminologie active%2$@.";
+
+/* ── Settings: browser-consent readiness ──────────────────────────────── */
+
+"Browser meetings cannot be recorded." = "Les réunions dans le navigateur ne peuvent pas être enregistrées.";
+"Browser meetings can be missed." = "Des réunions dans le navigateur peuvent être manquées.";
+"Notifications are turned off for Meeting Transcriber, so the \"record this meeting?\" prompt cannot appear and browser meetings will never be recorded. Allow notifications in System Settings." = "Les notifications sont désactivées pour Meeting Transcriber : l'invite « Enregistrer cette réunion ? » ne peut pas apparaître et les réunions dans le navigateur ne seront jamais enregistrées. Autorisez les notifications dans les Réglages Système.";
+"Meeting Transcriber has not been allowed to send notifications yet. Until it is, the \"record this meeting?\" prompt cannot appear and browser meetings will never be recorded." = "Meeting Transcriber n'a pas encore été autorisé à envoyer des notifications. Tant que ce n'est pas fait, l'invite « Enregistrer cette réunion ? » ne peut pas apparaître et les réunions dans le navigateur ne seront jamais enregistrées.";
+"Notifications are delivered quietly, so the \"record this meeting?\" prompt arrives without a banner and usually expires unanswered. Browser meetings will rarely be recorded. Allow banners in System Settings." = "Les notifications sont distribuées en silence : l'invite « Enregistrer cette réunion ? » arrive sans bannière et expire généralement sans réponse. Les réunions dans le navigateur seront rarement enregistrées. Autorisez les bannières dans les Réglages Système.";
+"Notifications are allowed but show no banner, so the \"record this meeting?\" prompt goes straight to Notification Center and expires unanswered. Browser meetings will rarely be recorded. Set the alert style to Banners or Alerts in System Settings." = "Les notifications sont autorisées mais sans bannière : l'invite « Enregistrer cette réunion ? » va directement dans le centre de notifications et expire sans réponse. Les réunions dans le navigateur seront rarement enregistrées. Choisissez le style d'alerte Bannières ou Alertes dans les Réglages Système.";
+"Time Sensitive notifications are turned off for Meeting Transcriber, so the \"record this meeting?\" prompt is hidden while a Focus mode or Do Not Disturb is on. Browser meetings started during Focus will not be recorded. Allow Time Sensitive notifications in System Settings." = "Les notifications urgentes sont désactivées pour Meeting Transcriber : l'invite « Enregistrer cette réunion ? » est masquée quand un mode de concentration ou Ne pas déranger est actif. Les réunions dans le navigateur démarrées pendant un mode de concentration ne seront pas enregistrées. Autorisez les notifications urgentes dans les Réglages Système.";
+
+/* ── Settings: record-only banner ─────────────────────────────────────── */
+
+"Files land in `%@`. Each recording gets a `<timestamp>_meta.json` sidecar next to its WAVs. No transcription, diarization, or protocol generation runs on this device." = "Les fichiers arrivent dans `%@`. Chaque enregistrement reçoit un fichier compagnon `<timestamp>_meta.json` à côté de ses WAV. Aucune transcription, diarisation ni génération de compte rendu ne s'exécute sur cet appareil.";
+
+/* ── Settings: permissions rows ───────────────────────────────────────── */
+
+"Granted" = "Accordée";
+"Will prompt on first recording" = "Demandée au premier enregistrement";
+"Denied — click to open Settings" = "Refusée — cliquez pour ouvrir les Réglages";
+"Required for app audio capture" = "Requise pour la capture audio des apps";
+"Required for meeting detection and app audio capture" = "Requise pour la détection des réunions et la capture audio des apps";
+"Optional — enables mute detection and meeting naming" = "Facultative — active la détection de sourdine et le nommage des réunions";
+"System Settings → Privacy & Security → Microphone → enable Meeting Transcriber" = "Réglages Système → Confidentialité et sécurité → Microphone → activez Meeting Transcriber";
+"System Settings → Privacy & Security → Accessibility → enable Meeting Transcriber" = "Réglages Système → Confidentialité et sécurité → Accessibilité → activez Meeting Transcriber";
+"%@ → enable Meeting Transcriber" = "%@ → activez Meeting Transcriber";
+
+/* ── Settings: audio toggles ──────────────────────────────────────────── */
+
+"Voice Activity Detection (VAD)" = "Détection d'activité vocale (VAD)";
+"Remove echoed remote speech before transcribing" = "Retirer l'écho des voix distantes avant la transcription";
+"Remove echoed remote speech from the transcript" = "Retirer l'écho des voix distantes de la transcription";
+"Detect Silent Capture Channel" = "Détecter un canal de capture silencieux";
+
+/* ── Settings: diarization tuning ─────────────────────────────────────── */
+
+"Cluster threshold" = "Seuil de clustering";
+"Min segment duration" = "Durée minimale de segment";
+"Cosine-similarity threshold for merging speaker embeddings. Higher values split speakers more aggressively (more speakers detected)." = "Seuil de similarité cosinus pour fusionner les embeddings de locuteurs. Des valeurs plus élevées séparent les locuteurs plus agressivement (plus de locuteurs détectés).";
+"VBx warm-start Fa controls clustering precision. Increasing it tightens speaker boundaries." = "Le warm-start Fa de VBx contrôle la précision du clustering. L'augmenter resserre les frontières entre locuteurs.";
+"VBx warm-start Fb controls clustering recall. Increasing it merges similar speakers more readily." = "Le warm-start Fb de VBx contrôle le rappel du clustering. L'augmenter fusionne plus volontiers les locuteurs similaires.";
+"Skip embedding extraction for segments shorter than this duration. Larger values trade recall for stability." = "Ignore l'extraction d'embeddings pour les segments plus courts que cette durée. Des valeurs plus grandes échangent du rappel contre de la stabilité.";
+"When enabled, frames with multiple active speakers are masked out during embedding extraction." = "Si activé, les trames comportant plusieurs locuteurs actifs sont masquées pendant l'extraction des embeddings.";
+
+/* ── Settings: transcription help texts ───────────────────────────────── */
+
+"Large V3 Turbo (recommended)" = "Large V3 Turbo (recommandé)";
+"Live captions in this language use a roughly 0.6 GB on-device model, downloaded once on first use." = "Les sous-titres en direct dans cette langue utilisent un modèle local d'environ 0,6 Go, téléchargé une seule fois au premier usage.";
+"Text file with one term per line. Parakeet uses CTC rescoring for saved transcription. Live captions do not use CTC vocabulary rescoring." = "Fichier texte avec un terme par ligne. Parakeet applique un rescoring CTC à la transcription sauvegardée. Les sous-titres en direct n'utilisent pas le rescoring CTC du vocabulaire.";
+"Text file with one term per line. Enable the experimental custom vocabulary prompt to pass a soft 32-token decoder hint to WhisperKit; it is not a guaranteed correction. It applies to live captions only when they use WhisperKit; language-specific live backends do not use it." = "Fichier texte avec un terme par ligne. Activez le prompt de vocabulaire expérimental pour passer à WhisperKit un indice décodeur souple de 32 jetons ; ce n'est pas une correction garantie. Il ne s'applique aux sous-titres en direct que lorsqu'ils utilisent WhisperKit ; les moteurs de direct propres à une langue ne l'utilisent pas.";
+"Experimental. WhisperKit treats the vocabulary as a decoder hint, not a correction. In a dense four-speaker English evaluation, a 25-content-token prompt from this 32-token budget raised word error rate from 29% to 77% and deletions from 73 to 241. It can omit whole sentences. Results vary by audio; prefer Parakeet for vocabulary boosting." = "Expérimental. WhisperKit traite le vocabulaire comme un indice du décodeur, pas comme une correction. Dans une évaluation anglaise dense à quatre locuteurs, un prompt de 25 jetons de contenu sur ce budget de 32 a fait passer le taux d'erreur de mots de 29 % à 77 % et les omissions de 73 à 241. Des phrases entières peuvent être omises. Les résultats varient selon l'audio ; préférez Parakeet pour le renforcement du vocabulaire.";
+"Caption backend follows your transcription language. Auto-detect uses the standard re-transcribe engine; set a specific language for low-latency streaming captions." = "Le moteur de sous-titres suit votre langue de transcription. La détection automatique utilise le moteur de re-transcription standard ; choisissez une langue précise pour des sous-titres en continu à faible latence.";
+"Caption backend follows your transcription language. English uses the low-latency Parakeet streaming model." = "Le moteur de sous-titres suit votre langue de transcription. L'anglais utilise le modèle de streaming Parakeet à faible latence.";
+"Caption backend follows your transcription language. It uses the low-latency Nemotron multilingual streaming model (~0.6-0.7 GB, downloads on first use)." = "Le moteur de sous-titres suit votre langue de transcription. Il utilise le modèle de streaming multilingue Nemotron à faible latence (~0,6-0,7 Go, téléchargé au premier usage).";
+"Captions appear in a click-through overlay at the bottom of the screen during recording. Hold ⌥ (Option) to drag it; the position is remembered across sessions. Caption text is **not** logged by default — enable \"Verbose Diagnostic Logging\" in Advanced to see partials + finals in Console.app (subsystem com.meetingtranscriber, category LiveTranscription). Engine changes take effect on the next recording — switching mid-recording is not supported." = "Les sous-titres apparaissent dans une surcouche transparente aux clics en bas de l'écran pendant l'enregistrement. Maintenez ⌥ (Option) pour la déplacer ; la position est mémorisée entre les sessions. Le texte des sous-titres n'est **pas** journalisé par défaut — activez « Journalisation de diagnostic détaillée » dans Avancé pour voir les partiels et finaux dans Console.app (sous-système com.meetingtranscriber, catégorie LiveTranscription). Un changement de moteur prend effet au prochain enregistrement — changer en cours d'enregistrement n'est pas pris en charge.";
+
+/* ── Settings: help popovers (keys carry literal \n\n between paragraphs) ── */
+
+"Removes the remote voices from the microphone audio with an on-device model before it is transcribed. Because it works on the audio rather than on the text, the cleaned track is also what speaker detection sees.\n\nThe saved recording is not changed: what is kept on disk stays the audio your devices captured. Only runs on recordings already reported as affected, and replaces the transcript option below wherever both are on." = "Retire les voix distantes de l'audio du microphone avec un modèle local avant la transcription. Comme il agit sur l'audio et non sur le texte, la piste nettoyée est aussi ce que voit la détection des locuteurs.\n\nL'enregistrement sauvegardé n'est pas modifié : ce qui est conservé sur disque reste l'audio capturé par vos périphériques. Ne s'exécute que sur les enregistrements déjà signalés comme affectés, et remplace l'option de transcription ci-dessous quand les deux sont activées.";
+"When a meeting is held on loudspeakers, the microphone picks the remote voices up as well and they are transcribed twice. With this on, the second copy is left out of the transcript.\n\nOnly applies to recordings already reported as affected, and only the written transcript is shortened: nothing is removed from the recording.\n\nIt is not exact, which is why it is off: a quiet remark you make while the far end is talking can be taken for part of the echo and left out of the transcript." = "Quand une réunion se tient sur haut-parleurs, le microphone capte aussi les voix distantes et elles sont transcrites deux fois. Avec cette option, la seconde copie est laissée hors de la transcription.\n\nNe s'applique qu'aux enregistrements déjà signalés comme affectés, et seule la transcription écrite est raccourcie : rien n'est retiré de l'enregistrement.\n\nCe n'est pas exact, et c'est pourquoi l'option est désactivée : une remarque discrète faite pendant que l'interlocuteur parle peut être prise pour une partie de l'écho et laissée hors de la transcription.";
+"Voice Activity Detection trims silent stretches out of the recording before transcription, which speeds up processing and can improve accuracy. Enable it for long or pause-heavy recordings; disable it if you notice speech being cut off." = "La détection d'activité vocale retire les passages silencieux de l'enregistrement avant la transcription, ce qui accélère le traitement et peut améliorer la précision. Activez-la pour les enregistrements longs ou riches en pauses ; désactivez-la si vous remarquez des paroles coupées.";
+"Turns the menu bar red when one capture channel goes silent while the other still carries audio, for example a muted microphone or a dropped app-audio tap. You are notified only when a channel actually stops delivering audio, not when it is merely quiet, so muting yourself is not reported as a fault. Turning this off removes the colour, not the warnings: a channel that stops delivering is still reported." = "Colore la barre des menus en rouge quand un canal de capture devient silencieux alors que l'autre transporte encore de l'audio, par exemple un microphone en sourdine ou une capture d'audio d'app perdue. Vous n'êtes notifié que quand un canal cesse réellement de fournir de l'audio, pas quand il est simplement calme : vous mettre en sourdine n'est donc pas signalé comme une panne. Désactiver cette option retire la couleur, pas les avertissements : un canal qui cesse de fournir est toujours signalé.";
+"How long the condition must last before the indicator turns red and, for a channel that has stopped delivering, before you are notified. Lower reacts faster to a dead channel; higher ignores natural speaking pauses." = "Durée pendant laquelle la condition doit persister avant que l'indicateur passe au rouge et, pour un canal qui a cessé de fournir, avant que vous soyez notifié. Une valeur plus basse réagit plus vite à un canal mort ; une plus haute ignore les pauses naturelles de parole.";
+
+/* ── Protocol language picker (display only; stored value stays English) ── */
+
+"German" = "Allemand";
+"English" = "Anglais";
+"French" = "Français";
+"Spanish" = "Espagnol";
+"Italian" = "Italien";
+"Dutch" = "Néerlandais";
+"Portuguese" = "Portugais";
+"Japanese" = "Japonais";
+"Chinese" = "Chinois";
+"Korean" = "Coréen";
+"Russian" = "Russe";
+"Arabic" = "Arabe";
+"Turkish" = "Turc";
+"Hindi" = "Hindi";
+"Swedish" = "Suédois";
+"Danish" = "Danois";
+"Finnish" = "Finnois";
+"Polish" = "Polonais";
+"Czech" = "Tchèque";
+"Greek" = "Grec";
+"Hungarian" = "Hongrois";
+"Romanian" = "Roumain";
+
+/* ── Counts using the shared plural-suffix argument (%2$@ is "" or "s") ── */
+
+"Enrolled %lld speaker%@" = "%1$lld locuteur%2$@ inscrit%2$@";
+"%lld paired recording%@" = "%1$lld enregistrement%2$@ apparié%2$@";
+"%lld single file%@" = "%1$lld fichier%2$@ seul%2$@";
+"%@ → %lld transcript%@" = "%1$@ → %2$lld transcription%3$@";
+"%lld total" = "%lld au total";
