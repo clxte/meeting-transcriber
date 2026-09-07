@@ -12,10 +12,10 @@ final class TranscriptDeliveryPolicyTests: XCTestCase {
         )
     }
 
-    func testHappyPath() {
+    func testHappyPath() throws {
         XCTAssertEqual(
             decide(),
-            .send(endpoint: URL(string: "https://example.com/hook")!),
+            try .send(endpoint: XCTUnwrap(URL(string: "https://example.com/hook"))),
         )
     }
 
@@ -39,11 +39,11 @@ final class TranscriptDeliveryPolicyTests: XCTestCase {
         XCTAssertTrue(TranscriptDeliveryPolicy.isMisconfiguration(.insecureEndpoint))
     }
 
-    func testLoopbackOverPlaintextIsAllowed() {
+    func testLoopbackOverPlaintextIsAllowed() throws {
         for host in ["localhost", "127.0.0.1"] {
             XCTAssertEqual(
                 decide(endpoint: "http://\(host):8080/hook"),
-                .send(endpoint: URL(string: "http://\(host):8080/hook")!),
+                try .send(endpoint: XCTUnwrap(URL(string: "http://\(host):8080/hook"))),
                 "expected \(host) to be allowed over http",
             )
         }

@@ -5,7 +5,9 @@ private final class Box<Value>: @unchecked Sendable {
     private let lock = NSLock()
     private var stored: Value
 
-    init(_ value: Value) { stored = value }
+    init(_ value: Value) {
+        stored = value
+    }
 
     var value: Value {
         get { lock.withLock { stored } }
@@ -18,12 +20,21 @@ private final class Box<Value>: @unchecked Sendable {
 }
 
 final class TranscriptWebhookTests: XCTestCase {
+    override func setUp() {
+        super.setUp()
+        Self.clearHandlers()
+    }
+
     override func tearDown() {
+        Self.clearHandlers()
+        super.tearDown()
+    }
+
+    private static func clearHandlers() {
         MockURLProtocol.handler = nil
         MockURLProtocol.errorHandler = nil
         MockURLProtocol.rawResponseHandler = nil
         MockURLProtocol.hangHandler = nil
-        super.tearDown()
     }
 
     private func makeSession() -> URLSession {
@@ -36,9 +47,9 @@ final class TranscriptWebhookTests: XCTestCase {
         endpoint: String = "https://example.com/hook",
         token: String? = "secret-token",
         maxAttempts: Int = 3,
-    ) -> TranscriptWebhook {
-        TranscriptWebhook(
-            endpoint: URL(string: endpoint)!,
+    ) throws -> TranscriptWebhook {
+        try TranscriptWebhook(
+            endpoint: XCTUnwrap(URL(string: endpoint)),
             token: token,
             session: makeSession(),
             maxAttempts: maxAttempts,
@@ -57,9 +68,13 @@ final class TranscriptWebhookTests: XCTestCase {
         warnings: [],
     )
 
+    /// `MockURLProtocol.handler` is non-throwing, so this cannot XCTUnwrap;
+    /// both unwraps are on mock plumbing that cannot fail for a request the
+    /// session itself constructed.
     private func response(_ request: URLRequest, status: Int = 200, body: Data = Data())
         -> (HTTPURLResponse, Data) {
         (
+            // swiftlint:disable:next force_unwrapping
             HTTPURLResponse(url: request.url!, statusCode: status, httpVersion: nil, headerFields: nil)!,
             body,
         )
@@ -67,18 +82,18 @@ final class TranscriptWebhookTests: XCTestCase {
 
     // MARK: - Endpoint validation
 
-    func testValidateRejectsRemotePlaintext() {
+    func testValidateRejectsRemotePlaintext() throws {
         XCTAssertEqual(
-            TranscriptWebhook.validate(endpoint: URL(string: "http://example.com/h")!),
+            try TranscriptWebhook.validate(endpoint: XCTUnwrap(URL(string: "http://example.com/h"))),
             .insecureEndpoint,
         )
-        XCTAssertNil(TranscriptWebhook.validate(endpoint: URL(string: "https://example.com/h")!))
-        XCTAssertNil(TranscriptWebhook.validate(endpoint: URL(string: "http://localhost:9000/h")!))
+        XCTAssertNil(try TranscriptWebhook.validate(endpoint: XCTUnwrap(URL(string: "https://example.com/h"))))
+        XCTAssertNil(try TranscriptWebhook.validate(endpoint: XCTUnwrap(URL(string: "http://localhost:9000/h"))))
     }
 
-    func testValidateRejectsNonHTTPScheme() {
+    func testValidateRejectsNonHTTPScheme() throws {
         XCTAssertEqual(
-            TranscriptWebhook.validate(endpoint: URL(string: "ftp://example.com/h")!),
+            try TranscriptWebhook.validate(endpoint: XCTUnwrap(URL(string: "ftp://example.com/h"))),
             .insecureEndpoint,
         )
     }
