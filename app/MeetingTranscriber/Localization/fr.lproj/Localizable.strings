@@ -289,6 +289,7 @@
 "Endpoint" = "Point de terminaison";
 "API Key" = "Clé d'API";
 "Bearer Token" = "Jeton Bearer";
+"Optional" = "Facultatif";
 "Leave empty if your local server doesn't require authentication" = "Laissez vide si votre serveur local n'exige pas d'authentification";
 "Base URL (e.g. http://localhost:1234/v1) or full chat-completions URL — both work." = "URL de base (p. ex. http://localhost:1234/v1) ou URL chat-completions complète — les deux fonctionnent.";
 "Fetch Models" = "Récupérer les modèles";

@@ -1,4 +1,5 @@
 @testable import MeetingTranscriber
+import SwiftUI
 import ViewInspector
 import XCTest
 
@@ -124,6 +125,49 @@ final class SettingsInteractionTests: XCTestCase {
         try field.setInput("https://example.com/hooks/transcript")
 
         XCTAssertEqual(settings.transcriptWebhookURL, "https://example.com/hooks/transcript")
+    }
+
+    func testTranscriptDeliveryTokenFieldWritesBackToSettings() throws {
+        let settings = makeSecretIsolatedSettings()
+        defer { settings.transcriptWebhookToken = "" }
+        let view = OutputSettingsView(settings: settings)
+
+        let field = try view.inspect()
+            .find(viewWithAccessibilityIdentifier: A11yID.transcriptWebhookTokenField)
+            .find(ViewType.SecureField.self)
+        try field.setInput("hook-token")
+
+        XCTAssertEqual(settings.transcriptWebhookToken, "hook-token")
+        // A grouped form draws a borderless field with nothing in it when empty,
+        // which is how this one read as missing.
+        XCTAssertTrue(try field.textFieldStyle() is RoundedBorderTextFieldStyle)
+    }
+
+    func testOpenAIAPIKeyFieldWritesBackToSettings() throws {
+        let settings = makeSecretIsolatedSettings()
+        settings.protocolProvider = .openAICompatible
+        defer { settings.openAIAPIKey = "" }
+        let view = OutputSettingsView(settings: settings)
+
+        let field = try view.inspect()
+            .find(viewWithAccessibilityIdentifier: A11yID.openAIAPIKeyField)
+            .find(ViewType.SecureField.self)
+        try field.setInput("sk-test")
+
+        XCTAssertEqual(settings.openAIAPIKey, "sk-test")
+        XCTAssertTrue(try field.textFieldStyle() is RoundedBorderTextFieldStyle)
+    }
+
+    /// Both secrets live in the Keychain, which is per-user rather than
+    /// per-suite: the default accounts hold the credentials the user configured
+    /// in the app, so a test writing through them would overwrite a real one.
+    private func makeSecretIsolatedSettings() -> AppSettings {
+        let tag = "SettingsInteractionTests-\(getpid())-\(UUID().uuidString)"
+        return AppSettings(
+            defaults: defaults,
+            apiKeyAccount: "\(tag)-openAIAPIKey",
+            webhookTokenAccount: "\(tag)-webhookToken",
+        )
     }
 
     // MARK: - Stepper write-back

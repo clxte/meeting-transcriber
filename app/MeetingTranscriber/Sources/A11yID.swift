@@ -41,6 +41,8 @@ enum A11yID {
     static let transcriptWebhookSection = "transcriptWebhookSection"
     static let transcriptWebhookToggle = "transcriptWebhookToggle"
     static let transcriptWebhookURLField = "transcriptWebhookURLField"
+    static let transcriptWebhookTokenField = "transcriptWebhookTokenField"
+    static let openAIAPIKeyField = "openAIAPIKeyField"
     static let vadSection = "vadSection"
     static let echoCancellationToggle = "echoCancellationToggle"
     static let echoDedupToggle = "echoDedupToggle"

@@ -120,8 +120,9 @@ struct OutputSettingsView: View {
                 HStack {
                     Text("Bearer Token")
                     Spacer()
-                    SecureField("", text: $settings.transcriptWebhookToken)
-                        .frame(width: 200)
+                    SecureField("Bearer Token", text: $settings.transcriptWebhookToken, prompt: Text("Optional"))
+                        .optionalSecretFieldStyle()
+                        .accessibilityIdentifier(A11yID.transcriptWebhookTokenField)
                 }
                 Text("Sent as an Authorization header. Leave empty for a local endpoint that needs no auth.")
                     .font(.caption)
@@ -194,8 +195,9 @@ struct OutputSettingsView: View {
         HStack {
             Text("API Key")
             Spacer()
-            SecureField("", text: $settings.openAIAPIKey)
-                .frame(width: 200)
+            SecureField("API Key", text: $settings.openAIAPIKey, prompt: Text("Optional"))
+                .optionalSecretFieldStyle()
+                .accessibilityIdentifier(A11yID.openAIAPIKeyField)
         }
         Text("Leave empty if your local server doesn't require authentication")
             .font(.caption)
@@ -367,5 +369,18 @@ struct OutputSettingsView: View {
         panel.message = String(localized: "Choose a folder for protocol output")
         guard panel.runModal() == .OK, let url = panel.url else { return }
         settings.setCustomOutputDir(url)
+    }
+}
+
+private extension View {
+    /// A trailing secret field in a `.grouped` form. The grouped style draws a
+    /// plain field with no border or background, so an empty one with no prompt
+    /// is invisible and reads as "there is nothing to type into". The border and
+    /// the prompt make it findable; the title stays as the hidden accessibility
+    /// label, since the row's own `Text` already shows it.
+    func optionalSecretFieldStyle() -> some View {
+        labelsHidden()
+            .textFieldStyle(.roundedBorder)
+            .frame(width: 200)
     }
 }
