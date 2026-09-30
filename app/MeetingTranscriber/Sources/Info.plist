@@ -10,6 +10,8 @@
     <string>Meeting Transcriber</string>
     <key>CFBundleDisplayName</key>
     <string>Meeting Transcriber</string>
+    <key>LSHasLocalizedDisplayName</key>
+    <true/>
     <key>CFBundleExecutable</key>
     <string>MeetingTranscriber</string>
     <key>CFBundleVersion</key>

@@ -209,6 +209,9 @@ final class LocalizationTableTests: XCTestCase {
         )
         let usageKeys = Set(plist.keys.filter { $0.hasSuffix("UsageDescription") })
         XCTAssertFalse(usageKeys.isEmpty)
+        // The app name is localized too; the Finder ignores it without the flag.
+        let nameKeys: Set = ["CFBundleName", "CFBundleDisplayName"]
+        XCTAssertEqual(plist["LSHasLocalizedDisplayName"] as? Bool, true)
 
         let frURL = Self.lprojDir.appendingPathComponent("InfoPlist.strings")
         let fr = try XCTUnwrap(
@@ -218,8 +221,8 @@ final class LocalizationTableTests: XCTestCase {
             "fr.lproj/InfoPlist.strings missing or unparseable",
         )
         XCTAssertEqual(
-            Set(fr.keys), usageKeys,
-            "fr InfoPlist.strings must translate exactly the usage descriptions Info.plist declares",
+            Set(fr.keys), usageKeys.union(nameKeys),
+            "fr InfoPlist.strings must translate exactly the app name and the usage descriptions Info.plist declares",
         )
         for (key, value) in fr {
             XCTAssertFalse(value.isEmpty, "Empty translation for \(key)")

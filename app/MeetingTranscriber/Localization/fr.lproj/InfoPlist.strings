@@ -1,11 +1,17 @@
-/* French translations of the permission prompts macOS itself displays.
-   The English originals live in Sources/Info.plist; macOS reads this table
-   from the app bundle's fr.lproj when the user's system language is French. */
+/* French translations of the Info.plist values macOS itself displays: the
+   app name (Finder, Dock, menu bar, System Settings) and the permission
+   prompts. The English originals live in Sources/Info.plist; macOS reads this
+   table from the app bundle's fr.lproj when the user's system language is
+   French. The Finder only honours the name with LSHasLocalizedDisplayName. */
 
-"NSAudioCaptureUsageDescription" = "Meeting Transcriber enregistre le son émis par l’app de réunion elle-même (les autres participants) via une capture de processus Core Audio.";
+"CFBundleName" = "Enregistrement visio";
 
-"NSMicrophoneUsageDescription" = "Meeting Transcriber a besoin d’accéder au microphone pour enregistrer l’audio des réunions à transcrire.";
+"CFBundleDisplayName" = "Enregistrement visio";
 
-"NSScreenCaptureUsageDescription" = "Meeting Transcriber a besoin de l’autorisation Enregistrement de l’écran pour détecter les réunions en cours en lisant les titres des fenêtres.";
+"NSAudioCaptureUsageDescription" = "Enregistrement visio enregistre le son émis par l’app de réunion elle-même (les autres participants) via une capture de processus Core Audio.";
 
-"NSAccessibilityUsageDescription" = "Meeting Transcriber utilise l’Accessibilité pour détecter l’état de sourdine et lire la liste des participants à la réunion.";
+"NSMicrophoneUsageDescription" = "Enregistrement visio a besoin d’accéder au microphone pour enregistrer l’audio des réunions à transcrire.";
+
+"NSScreenCaptureUsageDescription" = "Enregistrement visio a besoin de l’autorisation Enregistrement de l’écran pour détecter les réunions en cours en lisant les titres des fenêtres.";
+
+"NSAccessibilityUsageDescription" = "Enregistrement visio utilise l’Accessibilité pour détecter l’état de sourdine et lire la liste des participants à la réunion.";
